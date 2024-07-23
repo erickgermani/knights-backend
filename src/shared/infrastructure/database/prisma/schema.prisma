@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Weapon {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  mod      Int
+  attr     String
+  equipped Boolean
+  knightId String  @db.ObjectId
+  knight   Knight  @relation(fields: [knightId], references: [id])
+}
+
+model Attributes {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  strength     Int
+  dexterity    Int
+  constitution Int
+  intelligence Int
+  wisdom       Int
+  charisma     Int
+  knightId     String   @unique @db.ObjectId
+  Knight       Knight[]
+}
+
+model Knight {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  nickname     String
+  birthday     String
+  weapons      Weapon[]
+  attributes   Attributes @relation(fields: [attributesId], references: [id])
+  attributesId String     @db.ObjectId
+  keyAttribute String
+}
