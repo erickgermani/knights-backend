@@ -1,73 +1,105 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Knights Challenge
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+O desafio Knights visa a construção um sistema cadastro de heróis utilizando as
+seguintes tecnologias:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- Vue.js
+- NodeJS (Express.js | NestJS)
+- MongoDB | Redis
 
-## Description
+## Requisitos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+#### [GET] /knights
 
-## Installation
+Exibe a lista com todos os knights.
 
-```bash
-$ npm install
+#### [GET] /knights?filter=heroes
+
+Exibe uma lista contendo apenas os guerreiros que se tornaram heróis.
+
+#### [POST] /knights
+
+Cria um knight.
+
+#### [GET] /knights/:id
+
+Mostra informações de um knight.
+
+#### [DELETE] /knights/:id
+
+Remove um guerreiro. Esse guerreiro deve entrar no Hall of Heroes.
+
+#### [UPDATE] /knights/:id
+
+Permite alterar o apelido.
+
+## Regras
+
+##### Lista de Knights
+
+A lista deve ter:
+
+- Nome: Nome do knight
+- Idade: Anos corridos desde o nascimento
+- Armas: Quantidade de armas
+- Atributo: Atributo chave do knight
+- Ataque: Poder de ataque (Como calcular)
+- Exp: Experiência (Como calcular)
+
+## Knight
+
+O Knight deve seguir o esquema abaixo:
+
+```json
+{
+  "name": "",
+  "nickname": "",
+  "birthday": "",
+  "weapons": [
+    {
+      "name": "sword",
+      "mod": 3,
+      "attr": " strength",
+      "equipped": true
+    }
+  ],
+  "attributes": {
+    "strength": 0,
+    "dexterity": 0,
+    "constitution": 0,
+    "intelligence": 0,
+    "wisdom": 0,
+    "charisma": 0
+  },
+  "keyAttribute": "strength"
+}
 ```
 
-## Running the app
+## Ataque
 
-```bash
-# development
-$ npm run start
+O ataque de um knight é dado por:
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+attack = 10 + mod(keyAttr) + equippedWeapon.mod
 ```
 
-## Test
+Os valores dos atributos devem ser ajustados seguindo a tabela abaixo.
 
-```bash
-# unit tests
-$ npm run test
+| Valor | Mod |
+| ----- | --- |
+| 0-8   | -2  |
+| 9-10  | -1  |
+| 11-12 | 0   |
+| 13-15 | +1  |
+| 16-18 | +2  |
+| 19-20 | +3  |
 
-# e2e tests
-$ npm run test:e2e
+## Experiência
 
-# test coverage
-$ npm run test:cov
+Um knight só começa seu treinamento a partir dos 7 anos de idade. Antes disso, sua experiência de combate é 0.
+
+A experiência é dada por:
+
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+exp = Math.floor((age - 7) \* Math.pow(22, 1.45))
+```
