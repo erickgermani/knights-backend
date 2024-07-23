@@ -39,10 +39,12 @@ model Knights {
   attributes   Attributes @relation(fields: [attributesId], references: [id])
   keyAttribute String
   Heroes       Heroes[]
+  createdAt    DateTime   @default(now())
 }
 
 model Heroes {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  knightId String  @unique @db.ObjectId
-  knight   Knights @relation(fields: [knightId], references: [id])
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  knightId    String   @unique @db.ObjectId
+  knight      Knights  @relation(fields: [knightId], references: [id])
+  heroifiedAt DateTime @default(now())
 }
