@@ -4,13 +4,47 @@ import {
   IsDate,
   IsNotEmpty,
   IsNotEmptyObject,
+  IsNumber,
   IsOptional,
   IsString,
-  Length,
+  Max,
   MaxLength,
+  Min,
 } from 'class-validator';
 import { KnightProps } from '../entities/knight.entity';
 import { ClassValidatorFields } from '@/shared/domain/validators/class-validator-fields';
+
+class Attributes {
+  @IsNumber()
+  @Min(0)
+  @Max(20)
+  strength: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(20)
+  dexterity: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(20)
+  constituition: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(20)
+  intelligence: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(20)
+  wisdom: number;
+
+  @IsNumber()
+  @Min(0)
+  @Max(20)
+  charisma: number;
+}
 
 export class KnightRules {
   @MaxLength(255)
@@ -36,15 +70,8 @@ export class KnightRules {
     equipped: boolean;
   }>;
 
-  @IsNotEmpty()
-  attributes: {
-    strength: number;
-    dexterity: number;
-    constituition: number;
-    intelligence: number;
-    wisdom: number;
-    charisma: number;
-  };
+  @IsNotEmptyObject()
+  attributes: Attributes;
 
   @MaxLength(12)
   @IsString()

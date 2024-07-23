@@ -7,9 +7,18 @@ type Props = {
   birthday?: Date;
   weapons?: Array<Weapon>;
   attributes?: Attributes;
-  attributeKey?: keyof Attributes;
+  keyAttribute?: keyof Attributes;
   createdAt?: Date;
 };
+
+const attributeKeys = [
+  'charisma',
+  'constitution',
+  'dexterity',
+  'intelligence',
+  'strength',
+  'wisdom',
+];
 
 export function KnightDataBuilder(props: Props = {}): KnightProps {
   return {
@@ -24,7 +33,7 @@ export function KnightDataBuilder(props: Props = {}): KnightProps {
         equipped: true,
       },
     ],
-    attributes: {
+    attributes: props.attributes ?? {
       charisma: faker.number.int({
         min: 0,
         max: 20,
@@ -50,7 +59,14 @@ export function KnightDataBuilder(props: Props = {}): KnightProps {
         max: 20,
       }),
     },
-    keyAttribute: 'strength',
+    keyAttribute:
+      props.keyAttribute ??
+      attributeKeys[
+        faker.number.int({
+          min: 0,
+          max: Object.keys(attributeKeys).length - 1,
+        })
+      ],
     createdAt: props.createdAt ?? new Date(),
   };
 }
