@@ -13,10 +13,10 @@ export abstract class Entity<Props = any> {
     return this._id;
   }
 
-  toJSON(): Required<{ id: string } & Props> {
+  toJSON(): Required<{ id: string } & Record<string, any>> {
     return {
       id: this._id,
       ...this.props,
-    } as Required<{ id: string } & Props>;
+    } as Required<{ id: string } & Record<string, any>>;
   }
 }

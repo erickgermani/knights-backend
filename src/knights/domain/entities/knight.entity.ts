@@ -25,11 +25,25 @@ export type KnightProps = {
   weapons: Array<Weapon>;
   attributes: Attributes;
   keyAttribute: string;
+  age?: number;
+  attack?: number;
+  experience?: number;
   createdAt?: Date;
   updatedAt?: Date;
 };
 
 export class KnightEntity extends Entity<KnightProps> {
+  private INITIAL_ATTACK = 10;
+
+  private ATTACK_MODIFIER = {
+    8: -2,
+    10: -1,
+    12: 0,
+    15: 1,
+    18: 2,
+    20: 3,
+  };
+
   constructor(
     public readonly props: KnightProps,
     id?: string,
@@ -37,26 +51,92 @@ export class KnightEntity extends Entity<KnightProps> {
     KnightEntity.validate(props);
     super(props, id);
     this.props.createdAt = this.props.createdAt ?? new Date();
+    this.props.age = this.props.age ?? this.calculateAge(props.birthday);
+    this.props.attack = this.props.attack ?? this.calculateAttack();
+    this.props.experience = this.props.experience ?? this.calculateExperience();
   }
 
   get name() {
     return this.props.name;
   }
 
-  private set name(value: string) {
-    this.props.name = value;
-  }
-
   get nickname() {
     return this.props.nickname;
   }
 
-  private set nickname(value: string) {
-    this.props.nickname = value;
+  get birthday() {
+    return this.props.birthday;
+  }
+
+  get weapons() {
+    return this.props.weapons;
+  }
+
+  get attributes() {
+    return this.props.attributes;
+  }
+
+  get keyAttribute() {
+    return this.props.keyAttribute;
+  }
+
+  get age() {
+    return this.props.age;
+  }
+
+  get attack() {
+    return this.props.attack;
+  }
+
+  get experience() {
+    return this.props.experience;
   }
 
   get createdAt() {
     return this.props.createdAt;
+  }
+
+  private calculateAge(birthday: Date) {
+    const today = new Date();
+
+    let years = today.getFullYear() - birthday.getFullYear();
+
+    const currentMonth = today.getMonth();
+    const initialMonth = birthday.getMonth();
+
+    const currentDay = today.getDate();
+    const initialDay = birthday.getDate();
+
+    if (
+      currentMonth < initialMonth ||
+      (currentMonth === initialMonth && currentDay < initialDay)
+    )
+      years -= 1;
+
+    return years;
+  }
+
+  private getEquippedWeapon() {
+    const equippedWeapon = this.props.weapons.find((weapon) => weapon.equipped);
+
+    return equippedWeapon;
+  }
+
+  // TODO arrumar o calculateAttack
+  private calculateAttack() {
+    let attack = this.INITIAL_ATTACK;
+
+    attack += this.getEquippedWeapon().mod;
+
+    return attack;
+  }
+
+  private calculateExperience() {
+    if (this.props.age < 7) return 0;
+
+    const experience = Math.floor((this.props.age - 7) * Math.pow(22, 1.45));
+
+    return experience;
   }
 
   static validate(props: KnightProps) {
@@ -64,5 +144,18 @@ export class KnightEntity extends Entity<KnightProps> {
     const isValid = validator.validate(props);
 
     if (!isValid) throw new EntityValidationError(validator.errors);
+  }
+
+  toJSON() {
+    return {
+      id: this._id,
+      name: this.name,
+      age: this.age,
+      weapons: this.weapons.length,
+      keyAttribute: this.keyAttribute,
+      attack: this.attack,
+      experience: this.experience,
+      createdAt: this.createdAt,
+    };
   }
 }

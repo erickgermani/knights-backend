@@ -25,12 +25,6 @@ describe('KnightEntity unit tests', () => {
     expect(typeof sut.name).toBe('string');
   });
 
-  it('Setter of name field', () => {
-    sut['name'] = 'other name';
-    expect(sut.props.name).toEqual('other name');
-    expect(typeof sut.props.name).toBe('string');
-  });
-
   it('Getter of createdAt field', () => {
     expect(sut.createdAt).toBeDefined();
     expect(sut.createdAt).toBeInstanceOf(Date);

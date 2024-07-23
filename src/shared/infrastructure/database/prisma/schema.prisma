@@ -7,34 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Weapon {
+model Weapons {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   mod      Int
   attr     String
   equipped Boolean
   knightId String  @db.ObjectId
-  knight   Knight  @relation(fields: [knightId], references: [id])
+  knight   Knights @relation(fields: [knightId], references: [id])
 }
 
 model Attributes {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   strength     Int
   dexterity    Int
   constitution Int
   intelligence Int
   wisdom       Int
   charisma     Int
-  knightId     String   @unique @db.ObjectId
-  Knight       Knight[]
+  knightId     String    @unique @db.ObjectId
+  Knight       Knights[]
 }
 
-model Knight {
+model Knights {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  nickname     String
+  nickname     String     @unique
   birthday     String
-  weapons      Weapon[]
+  weapons      Weapons[]
   attributes   Attributes @relation(fields: [attributesId], references: [id])
   attributesId String     @db.ObjectId
   keyAttribute String

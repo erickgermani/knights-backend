@@ -25,12 +25,30 @@ export function KnightDataBuilder(props: Props = {}): KnightProps {
       },
     ],
     attributes: {
-      charisma: 0,
-      constitution: 0,
-      dexterity: 0,
-      intelligence: 0,
-      strength: 0,
-      wisdom: 0,
+      charisma: faker.number.int({
+        min: 0,
+        max: 20,
+      }),
+      constitution: faker.number.int({
+        min: 0,
+        max: 20,
+      }),
+      dexterity: faker.number.int({
+        min: 0,
+        max: 20,
+      }),
+      intelligence: faker.number.int({
+        min: 0,
+        max: 20,
+      }),
+      strength: faker.number.int({
+        min: 0,
+        max: 20,
+      }),
+      wisdom: faker.number.int({
+        min: 0,
+        max: 20,
+      }),
     },
     keyAttribute: 'strength',
     createdAt: props.createdAt ?? new Date(),
