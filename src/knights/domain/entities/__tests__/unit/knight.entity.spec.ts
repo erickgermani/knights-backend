@@ -147,10 +147,11 @@ describe('KnightEntity unit tests', () => {
       KnightDataBuilder({
         attributes,
         weapons,
+        keyAttribute: 'dexterity',
       }),
     );
 
-    const expectedAttack = sut['INITIAL_ATTACK'] + 1 + 2;
+    const expectedAttack = sut['INITIAL_ATTACK'] + -1 + 2;
 
     expect(sut.attack).toBe(expectedAttack);
   });

@@ -1,11 +1,8 @@
-import 'reflect-metadata';
-
 import {
   ArrayNotEmpty,
   IsArray,
   IsBoolean,
   IsDate,
-  IsInstance,
   IsNotEmpty,
   IsNotEmptyObject,
   IsNumber,
@@ -15,11 +12,9 @@ import {
   Max,
   MaxLength,
   Min,
-  ValidateNested,
 } from 'class-validator';
 import { KnightProps } from '../entities/knight.entity';
 import { ClassValidatorFields } from '@/shared/domain/validators/class-validator-fields';
-import { Type } from 'class-transformer';
 
 class AttributesRules {
   @IsNumber()
