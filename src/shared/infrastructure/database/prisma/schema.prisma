@@ -35,7 +35,14 @@ model Knights {
   nickname     String     @unique
   birthday     String
   weapons      Weapons[]
-  attributes   Attributes @relation(fields: [attributesId], references: [id])
   attributesId String     @db.ObjectId
+  attributes   Attributes @relation(fields: [attributesId], references: [id])
   keyAttribute String
+  Heroes       Heroes[]
+}
+
+model Heroes {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  knightId String  @unique @db.ObjectId
+  knight   Knights @relation(fields: [knightId], references: [id])
 }
