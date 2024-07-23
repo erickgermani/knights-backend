@@ -21,13 +21,12 @@ const attributeKeys = [
 ];
 
 function getRandomAttributeKey() {
-  const attributeKey =
-    attributeKeys[
-      faker.number.int({
-        min: 0,
-        max: Object.keys(attributeKeys).length - 1,
-      })
-    ];
+  const attributeKey = attributeKeys[
+    faker.number.int({
+      min: 0,
+      max: Object.keys(attributeKeys).length - 1,
+    })
+  ] as keyof Attributes;
 
   return attributeKey;
 }

@@ -18,7 +18,9 @@ namespace KnightRepository {
       Filter,
       SearchParams,
       SearchResult
-    > {}
+    > {
+    nicknameExists(nickname: string): Promise<void>;
+  }
 }
 
 export default KnightRepository;

@@ -24,7 +24,7 @@ export type KnightProps = {
   birthday: Date;
   weapons: Array<Weapon>;
   attributes: Attributes;
-  keyAttribute: string;
+  keyAttribute: keyof Attributes;
   age?: number;
   attack?: number;
   experience?: number;

@@ -1,12 +1,33 @@
 import { KnightEntity } from '@/knights/domain/entities/knight.entity';
 import KnightInMemoryRepository from '../../knight-in-memory.repository';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
+import { ConflictError } from '@/shared/domain/errors/conflict-error';
 
 describe('KnightInMemoryRepository unit tests', () => {
   let sut: KnightInMemoryRepository;
 
   beforeEach(() => {
     sut = new KnightInMemoryRepository();
+  });
+
+  describe('nicknameExists method', () => {
+    it('Should throw error when not found', async () => {
+      const entity = new KnightEntity(
+        KnightDataBuilder({ nickname: 'john.knight' }),
+      );
+
+      await sut.insert(entity);
+
+      await expect(sut.nicknameExists(entity.nickname)).rejects.toThrow(
+        new ConflictError('Nickname already used'),
+      );
+    });
+
+    it('Should find a entity by nickname', async () => {
+      expect.assertions(0);
+
+      await sut.nicknameExists('unknownnickname');
+    });
   });
 
   describe('applyFilter', () => {
