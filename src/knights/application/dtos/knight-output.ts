@@ -1,11 +1,13 @@
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import { KnightEntity, Weapon } from '@/knights/domain/entities/knight.entity';
 
 export type KnightOutput = {
   id: string;
   name: string;
-  age: number;
-  weapons: number;
+  nickname: string;
+  birthday: Date;
+  weapons: Weapon[];
   keyAttribute: string;
+  age: number;
   attack: number;
   experience: number;
   createdAt: Date;
