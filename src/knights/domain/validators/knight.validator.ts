@@ -1,20 +1,27 @@
+import 'reflect-metadata';
+
 import {
   ArrayNotEmpty,
   IsArray,
+  IsBoolean,
   IsDate,
+  IsInstance,
   IsNotEmpty,
   IsNotEmptyObject,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
   Max,
   MaxLength,
   Min,
+  ValidateNested,
 } from 'class-validator';
 import { KnightProps } from '../entities/knight.entity';
 import { ClassValidatorFields } from '@/shared/domain/validators/class-validator-fields';
+import { Type } from 'class-transformer';
 
-class Attributes {
+class AttributesRules {
   @IsNumber()
   @Min(0)
   @Max(20)
@@ -46,6 +53,24 @@ class Attributes {
   charisma: number;
 }
 
+class WeaponRules {
+  @MaxLength(255)
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsNumber()
+  mod: number;
+
+  @MaxLength(12)
+  @IsString()
+  @IsNotEmpty()
+  attr: string;
+
+  @IsBoolean()
+  equipped: boolean;
+}
+
 export class KnightRules {
   @MaxLength(255)
   @IsString()
@@ -58,20 +83,15 @@ export class KnightRules {
   nickname: string;
 
   @IsDate()
-  @IsNotEmpty()
   birthday: Date;
 
   @IsArray()
   @ArrayNotEmpty()
-  weapons: Array<{
-    name: string;
-    mod: number;
-    attr: string;
-    equipped: boolean;
-  }>;
+  weapons: WeaponRules[];
 
+  @IsObject()
   @IsNotEmptyObject()
-  attributes: Attributes;
+  attributes: AttributesRules;
 
   @MaxLength(12)
   @IsString()
