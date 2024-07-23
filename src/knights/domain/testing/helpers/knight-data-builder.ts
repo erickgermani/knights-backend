@@ -20,15 +20,28 @@ const attributeKeys = [
   'wisdom',
 ];
 
+function getRandomAttributeKey() {
+  const attributeKey =
+    attributeKeys[
+      faker.number.int({
+        min: 0,
+        max: Object.keys(attributeKeys).length - 1,
+      })
+    ];
+
+  return attributeKey;
+}
+
 export function KnightDataBuilder(props: Props = {}): KnightProps {
   return {
     name: props.name ?? faker.person.fullName(),
     nickname: props.nickname ?? faker.internet.userName(),
-    birthday: props.birthday ?? new Date(),
+    birthday:
+      props.birthday ?? faker.date.birthdate({ min: 1, max: 80, mode: 'age' }),
     weapons: props.weapons ?? [
       {
-        attr: 'strength',
-        name: 'sword',
+        attr: getRandomAttributeKey(),
+        name: faker.commerce.productName(),
         mod: 3,
         equipped: true,
       },
@@ -59,14 +72,7 @@ export function KnightDataBuilder(props: Props = {}): KnightProps {
         max: 20,
       }),
     },
-    keyAttribute:
-      props.keyAttribute ??
-      attributeKeys[
-        faker.number.int({
-          min: 0,
-          max: Object.keys(attributeKeys).length - 1,
-        })
-      ],
+    keyAttribute: props.keyAttribute ?? getRandomAttributeKey(),
     createdAt: props.createdAt ?? new Date(),
   };
 }
