@@ -1,3 +1,5 @@
+import { CreateKnightUseCase } from '@/knights/application/usecases/create-knight.usecase';
+import { Attributes } from '@/knights/domain/entities/knight.entity';
 import {
   ArrayNotEmpty,
   IsArray,
@@ -13,10 +15,8 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
-import { KnightProps } from '../entities/knight.entity';
-import { ClassValidatorFields } from '@/shared/domain/validators/class-validator-fields';
 
-class AttributesRules {
+class AttributesDto {
   @IsNumber()
   @Min(0)
   @Max(20)
@@ -48,7 +48,7 @@ class AttributesRules {
   charisma: number;
 }
 
-class WeaponRules {
+class WeaponDto {
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
@@ -66,13 +66,11 @@ class WeaponRules {
   equipped: boolean;
 }
 
-export class KnightRules {
-  @MaxLength(255)
+export class CreateDto implements CreateKnightUseCase.Input {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @MaxLength(255)
   @IsString()
   @IsNotEmpty()
   nickname: string;
@@ -82,50 +80,18 @@ export class KnightRules {
 
   @IsArray()
   @ArrayNotEmpty()
-  weapons: WeaponRules[];
+  weapons: WeaponDto[];
 
   @IsObject()
   @IsNotEmptyObject()
-  attributes: AttributesRules;
+  attributes: AttributesDto;
 
   @MaxLength(12)
   @IsString()
   @IsNotEmpty()
-  keyAttribute: string;
+  keyAttribute: keyof Attributes;
 
   @IsDate()
   @IsOptional()
   createdAt?: Date;
-
-  constructor({
-    name,
-    nickname,
-    birthday,
-    attributes,
-    weapons,
-    keyAttribute,
-    createdAt,
-  }: KnightProps) {
-    Object.assign(this, {
-      name,
-      nickname,
-      birthday,
-      attributes,
-      weapons,
-      keyAttribute,
-      createdAt,
-    });
-  }
-}
-
-export class KnightValidator extends ClassValidatorFields<KnightRules> {
-  validate(data: KnightProps): boolean {
-    return super.validate(new KnightRules(data ?? ({} as KnightProps)));
-  }
-}
-
-export class KnightValidatorFactory {
-  static create(): KnightValidator {
-    return new KnightValidator();
-  }
 }

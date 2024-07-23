@@ -35,7 +35,7 @@ describe('InMemorySearchableRepository unit tests', () => {
   });
 
   describe('applyFilter method', () => {
-    it('should no filter items when filter param is null', async () => {
+    it('Should no filter items when filter param is null', async () => {
       const items = [new StubEntity({ name: 'name value', price: 100 })];
 
       const spyFilterMethod = jest.spyOn(items, 'filter');
@@ -46,7 +46,7 @@ describe('InMemorySearchableRepository unit tests', () => {
       expect(spyFilterMethod).not.toHaveBeenCalled();
     });
 
-    it('should filter items using filter param', async () => {
+    it('Should filter items using filter param', async () => {
       const items = [
         new StubEntity({ name: 'TEST', price: 100 }),
         new StubEntity({ name: 'test', price: 100 }),
@@ -73,7 +73,7 @@ describe('InMemorySearchableRepository unit tests', () => {
   });
 
   describe('applySort method', () => {
-    it('should no sort items', async () => {
+    it('Should no sort items', async () => {
       const items = [
         new StubEntity({ name: 'a', price: 100 }),
         new StubEntity({ name: 'b', price: 100 }),
@@ -92,7 +92,7 @@ describe('InMemorySearchableRepository unit tests', () => {
       expect(itemsSorted).toStrictEqual(items);
     });
 
-    it('should sort items', async () => {
+    it('Should sort items', async () => {
       const items = [
         new StubEntity({ name: 'b', price: 100 }),
         new StubEntity({ name: 'a', price: 100 }),
@@ -110,7 +110,7 @@ describe('InMemorySearchableRepository unit tests', () => {
   });
 
   describe('applyPaginate method', () => {
-    it('should paginate items', async () => {
+    it('Should paginate items', async () => {
       const items = [
         new StubEntity({ name: 'a', price: 100 }),
         new StubEntity({ name: 'b', price: 100 }),
@@ -138,7 +138,7 @@ describe('InMemorySearchableRepository unit tests', () => {
   });
 
   describe('search method', () => {
-    it('should apply only pagination when other params are null', async () => {
+    it('Should apply only pagination when other params are null', async () => {
       const entity = new StubEntity({ name: 'test', price: 50 });
       const items = Array(16).fill(entity);
       sut.items = items;
@@ -158,7 +158,7 @@ describe('InMemorySearchableRepository unit tests', () => {
       );
     });
 
-    it('should apply paginate and filter', async () => {
+    it('Should apply paginate and filter', async () => {
       const items = [
         new StubEntity({ name: 'test', price: 100 }),
         new StubEntity({ name: 'a', price: 100 }),
@@ -208,7 +208,7 @@ describe('InMemorySearchableRepository unit tests', () => {
       );
     });
 
-    it('should apply paginate and sort', async () => {
+    it('Should apply paginate and sort', async () => {
       const items = [
         new StubEntity({ name: 'b', price: 100 }),
         new StubEntity({ name: 'a', price: 100 }),
@@ -301,7 +301,7 @@ describe('InMemorySearchableRepository unit tests', () => {
       );
     });
 
-    it('should search using paginate, sort and filter', async () => {
+    it('Should search using paginate, sort and filter', async () => {
       const items = [
         new StubEntity({ name: 'test', price: 100 }),
         new StubEntity({ name: 'a', price: 100 }),

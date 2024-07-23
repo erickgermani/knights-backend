@@ -100,6 +100,14 @@ export class KnightEntity extends Entity<KnightProps> {
     return this.props.createdAt;
   }
 
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  private set updatedAt(value: Date) {
+    this.props.updatedAt = value;
+  }
+
   updateNickname(value: string) {
     KnightEntity.validate({ ...this.props, nickname: value });
 
@@ -181,6 +189,7 @@ export class KnightEntity extends Entity<KnightProps> {
       attack: this.attack,
       experience: this.experience,
       createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 }
