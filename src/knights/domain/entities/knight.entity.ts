@@ -63,8 +63,6 @@ export class KnightEntity extends Entity<KnightProps> {
     const validator = KnightValidatorFactory.create();
     const isValid = validator.validate(props);
 
-    console.log('validator.errors :>> ', validator.errors);
-
     if (!isValid) throw new EntityValidationError(validator.errors);
   }
 }
