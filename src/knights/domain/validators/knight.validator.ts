@@ -1,10 +1,12 @@
 import {
+  ArrayNotEmpty,
   IsArray,
   IsDate,
   IsNotEmpty,
   IsNotEmptyObject,
   IsOptional,
   IsString,
+  Length,
   MaxLength,
 } from 'class-validator';
 import { KnightProps } from '../entities/knight.entity';
@@ -26,7 +28,7 @@ export class KnightRules {
   birthday: Date;
 
   @IsArray()
-  @IsNotEmptyObject()
+  @ArrayNotEmpty()
   weapons: Array<{
     name: string;
     mod: number;
