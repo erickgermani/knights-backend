@@ -148,7 +148,7 @@ describe('KnightEntity unit tests', () => {
       }),
     );
 
-    const expectedAttack = sut['INITIAL_ATTACK'] + -1 + 2;
+    const expectedAttack = KnightEntity.INITIAL_ATTACK + -1 + 2;
 
     expect(sut.attack).toBe(expectedAttack);
   });

@@ -11,7 +11,7 @@ describe('KnightsController', () => {
 
   beforeEach(async () => {
     sut = new KnightsController();
-    id = 'beca4dc4-399e-4c4b-b6e5-bb032559fb95';
+    id = '60af9245e1f49f1b9a7c94a4';
 
     const today = new Date();
 

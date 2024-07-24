@@ -1,4 +1,3 @@
-import { validate as uuidValidate } from 'uuid';
 import { Entity } from '../../entity';
 
 type StubProps = {
@@ -19,20 +18,20 @@ describe('Entity unit tests', () => {
 
     expect(entity.props).toStrictEqual(props);
     expect(entity._id).not.toBeNull();
-    expect(uuidValidate(entity._id)).toBeTruthy();
+    expect(entity._id).toMatch(/^[0-9a-fA-F]{24}$/);
   });
 
-  it('Should accept a valid uuid', () => {
+  it('Should accept a valid ObjectId', () => {
     const props = {
       prop1: 'value1',
       prop2: 7,
     };
 
-    const id = '78f7dc1a-2489-4f0b-80cf-d02085c325cc';
+    const id = '60af9245e1f49f1b9a7c94a4';
 
     const entity = new StubEntity(props, id);
 
-    expect(uuidValidate(entity._id)).toBeTruthy();
+    expect(entity._id).toMatch(/^[0-9a-fA-F]{24}$/);
     expect(entity._id).toBe(id);
   });
 
@@ -42,7 +41,7 @@ describe('Entity unit tests', () => {
       prop2: 7,
     };
 
-    const id = '78f7dc1a-2489-4f0b-80cf-d02085c325cc';
+    const id = '60af9245e1f49f1b9a7c94a4';
 
     const entity = new StubEntity(props, id);
 

@@ -30,9 +30,9 @@ export type KnightProps = {
 };
 
 export class KnightEntity extends Entity<KnightProps> {
-  private INITIAL_ATTACK = 10;
+  static INITIAL_ATTACK = 10;
 
-  private ATTACK_MODIFIER = {
+  static ATTACK_MODIFIER = {
     '0-8': -2,
     '9-10': -1,
     '1-12': 0,
@@ -45,6 +45,8 @@ export class KnightEntity extends Entity<KnightProps> {
   readonly attack: number;
   readonly experience: number;
 
+  heroifiedAt?: Date;
+
   constructor(
     public readonly props: KnightProps,
     id?: string,
@@ -55,6 +57,7 @@ export class KnightEntity extends Entity<KnightProps> {
     this.age = this.age ?? this.calculateAge(props.birthday);
     this.attack = this.attack ?? this.calculateAttack();
     this.experience = this.experience ?? this.calculateExperience();
+    this.props.updatedAt = this.props.updatedAt ?? null;
   }
 
   get name() {
@@ -133,11 +136,11 @@ export class KnightEntity extends Entity<KnightProps> {
     const attributeValue =
       this.attributes[this.keyAttribute as keyof Attributes];
 
-    for (const range in this.ATTACK_MODIFIER) {
+    for (const range in KnightEntity.ATTACK_MODIFIER) {
       const [min, max] = range.split('-').map(Number);
 
       if (attributeValue >= min && attributeValue <= max)
-        return this.ATTACK_MODIFIER[range];
+        return KnightEntity.ATTACK_MODIFIER[range];
     }
   }
 
@@ -145,7 +148,7 @@ export class KnightEntity extends Entity<KnightProps> {
     const attributeMod = this.getAttributeMod();
     const weaponMod = this.getEquippedWeapon().mod;
 
-    const attack = this.INITIAL_ATTACK + attributeMod + weaponMod;
+    const attack = KnightEntity.INITIAL_ATTACK + attributeMod + weaponMod;
 
     return attack;
   }

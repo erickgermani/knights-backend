@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { ObjectId } from 'bson';
 
 export abstract class Entity<Props = any> {
   public readonly _id: string;
@@ -6,7 +6,7 @@ export abstract class Entity<Props = any> {
 
   constructor(props: Props, id?: string) {
     this.props = props;
-    this._id = id || uuidv4();
+    this._id = id || new ObjectId().toString();
   }
 
   get id() {

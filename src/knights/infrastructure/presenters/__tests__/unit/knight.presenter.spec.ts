@@ -10,7 +10,7 @@ describe('KnightPresenter unit tests', () => {
   const today = new Date();
 
   const props = {
-    id: 'beca4dc4-399e-4c4b-b6e5-bb032559fb95',
+    id: '60af9245e1f49f1b9a7c94a4',
     name: 'test name',
     nickname: 'test nickname',
     birthday: today,
@@ -62,7 +62,7 @@ describe('KnightPresenter unit tests', () => {
     const output = instanceToPlain(sut);
 
     expect(output).toEqual({
-      id: 'beca4dc4-399e-4c4b-b6e5-bb032559fb95',
+      id: '60af9245e1f49f1b9a7c94a4',
       name: 'test name',
       nickname: 'test nickname',
       birthday: today.toISOString(),
@@ -96,7 +96,7 @@ describe('KnightCollectionPresenter unit tests', () => {
   const today = new Date();
 
   const props = {
-    id: 'beca4dc4-399e-4c4b-b6e5-bb032559fb95',
+    id: '60af9245e1f49f1b9a7c94a4',
     name: 'test name',
     nickname: 'test nickname',
     birthday: today,
@@ -161,7 +161,7 @@ describe('KnightCollectionPresenter unit tests', () => {
     expect(output).toStrictEqual({
       data: [
         {
-          id: 'beca4dc4-399e-4c4b-b6e5-bb032559fb95',
+          id: '60af9245e1f49f1b9a7c94a4',
           name: 'test name',
           nickname: 'test nickname',
           birthday: today.toISOString(),
@@ -205,7 +205,7 @@ describe('KnightCollectionPresenter unit tests', () => {
     expect(output).toStrictEqual({
       data: [
         {
-          id: 'beca4dc4-399e-4c4b-b6e5-bb032559fb95',
+          id: '60af9245e1f49f1b9a7c94a4',
           name: 'test name',
           nickname: 'test nickname',
           birthday: today.toISOString(),

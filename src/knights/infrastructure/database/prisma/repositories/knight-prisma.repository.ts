@@ -74,12 +74,14 @@ class KnightPrismaRepository implements KnightRepository.Repository {
   async insert(entity: KnightEntity): Promise<void> {
     await this.prismaService.knight.create({
       data: {
+        id: entity.id,
         name: entity.name,
         nickname: entity.nickname,
         weapons: entity.weapons,
         attributes: entity.attributes,
         birthday: entity.birthday.toISOString(),
         keyAttribute: entity.keyAttribute,
+        createdAt: entity.createdAt,
       },
     });
   }
@@ -111,6 +113,7 @@ class KnightPrismaRepository implements KnightRepository.Repository {
     });
   }
 
+  // TODO refatorar este delete
   async delete(id: string): Promise<void> {
     await this._get(id);
     await this.prismaService.knight.delete({
