@@ -2,6 +2,7 @@ import ColletionPresenter from '@/shared/infrastructure/presenters/collection.pr
 import { KnightOutput } from '@/knights/application/dtos/knight-output';
 import { ListKnightsUseCase } from '@/knights/application/usecases/list-knights.usecase';
 import { Attributes, Weapon } from '@/knights/domain/entities/knight.entity';
+import { Transform } from 'class-transformer';
 
 class KnightPresenter {
   id: string;
@@ -10,6 +11,7 @@ class KnightPresenter {
 
   nickname: string;
 
+  @Transform(({ value }: { value: Date }) => value.toISOString())
   birthday: Date;
 
   weapons: Weapon[];
@@ -24,8 +26,12 @@ class KnightPresenter {
 
   experience: number;
 
+  @Transform(({ value }: { value: Date }) => value.toISOString())
   createdAt: Date;
 
+  @Transform(({ value }: { value: Date }) =>
+    value ? value.toISOString() : value,
+  )
   updatedAt: Date;
 
   constructor(output: KnightOutput) {
