@@ -16,7 +16,7 @@ describe('KnightPresenter unit tests', () => {
     birthday: today,
     weapons: [
       {
-        attr: 'charisma',
+        attr: 'charisma' as any,
         name: 'Ergonomic Fresh Pants',
         mod: 3,
         equipped: true,
@@ -102,7 +102,7 @@ describe('KnightCollectionPresenter unit tests', () => {
     birthday: today,
     weapons: [
       {
-        attr: 'charisma',
+        attr: 'charisma' as any,
         name: 'Ergonomic Fresh Pants',
         mod: 3,
         equipped: true,

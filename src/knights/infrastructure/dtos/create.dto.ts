@@ -60,7 +60,7 @@ class WeaponDto {
   @MaxLength(12)
   @IsString()
   @IsNotEmpty()
-  attr: string;
+  attr: keyof Attributes;
 
   @IsBoolean()
   equipped: boolean;

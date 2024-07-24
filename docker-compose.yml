@@ -3,10 +3,15 @@ version: '3.1'
 services:
   mongo:
     image: mongo:latest
-    container_name: knights
+    container_name: knights-db
     restart: always
     ports:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: knights
       MONGO_INITDB_ROOT_PASSWORD: senha
+      MONGO_INITDB_DATABASE: knights
+    volumes:
+      - mongo-data:/data/db
+volumes:
+  mongo-data:

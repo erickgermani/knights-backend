@@ -61,19 +61,16 @@ describe('KnightEntity unit tests', () => {
 
   it('Getter of age field', () => {
     expect(sut.age).toBeDefined();
-    expect(sut.age).toEqual(props.age);
     expect(typeof sut.age).toBe('number');
   });
 
   it('Getter of attack field', () => {
     expect(sut.attack).toBeDefined();
-    expect(sut.attack).toEqual(props.attack);
     expect(typeof sut.attack).toBe('number');
   });
 
   it('Getter of experience field', () => {
     expect(sut.experience).toBeDefined();
-    expect(sut.experience).toEqual(props.experience);
     expect(typeof sut.experience).toBe('number');
   });
 

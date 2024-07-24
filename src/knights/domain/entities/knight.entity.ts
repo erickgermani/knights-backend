@@ -2,13 +2,6 @@ import { Entity } from '@/shared/domain/entities/entity';
 import { KnightValidatorFactory } from '../validators/knight.validator';
 import { EntityValidationError } from '@/shared/domain/errors/validation-error';
 
-export type Weapon = {
-  name: string;
-  mod: number;
-  attr: string;
-  equipped: boolean;
-};
-
 export type Attributes = {
   strength: number;
   dexterity: number;
@@ -18,6 +11,13 @@ export type Attributes = {
   charisma: number;
 };
 
+export type Weapon = {
+  name: string;
+  mod: number;
+  attr: keyof Attributes;
+  equipped: boolean;
+};
+
 export type KnightProps = {
   name: string;
   nickname: string;
@@ -25,9 +25,6 @@ export type KnightProps = {
   weapons: Array<Weapon>;
   attributes: Attributes;
   keyAttribute: keyof Attributes;
-  age?: number;
-  attack?: number;
-  experience?: number;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -44,6 +41,10 @@ export class KnightEntity extends Entity<KnightProps> {
     '19-20': 3,
   };
 
+  readonly age: number;
+  readonly attack: number;
+  readonly experience: number;
+
   constructor(
     public readonly props: KnightProps,
     id?: string,
@@ -51,9 +52,9 @@ export class KnightEntity extends Entity<KnightProps> {
     KnightEntity.validate(props);
     super(props, id);
     this.props.createdAt = this.props.createdAt ?? new Date();
-    this.props.age = this.props.age ?? this.calculateAge(props.birthday);
-    this.props.attack = this.props.attack ?? this.calculateAttack();
-    this.props.experience = this.props.experience ?? this.calculateExperience();
+    this.age = this.age ?? this.calculateAge(props.birthday);
+    this.attack = this.attack ?? this.calculateAttack();
+    this.experience = this.experience ?? this.calculateExperience();
   }
 
   get name() {
@@ -82,18 +83,6 @@ export class KnightEntity extends Entity<KnightProps> {
 
   get keyAttribute() {
     return this.props.keyAttribute;
-  }
-
-  get age() {
-    return this.props.age;
-  }
-
-  get attack() {
-    return this.props.attack;
-  }
-
-  get experience() {
-    return this.props.experience;
   }
 
   get createdAt() {
@@ -162,9 +151,9 @@ export class KnightEntity extends Entity<KnightProps> {
   }
 
   private calculateExperience() {
-    if (this.props.age < 7) return 0;
+    if (this.age < 7) return 0;
 
-    const experience = Math.floor((this.props.age - 7) * Math.pow(22, 1.45));
+    const experience = Math.floor((this.age - 7) * Math.pow(22, 1.45));
 
     return experience;
   }

@@ -7,44 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Weapons {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  mod      Int
-  attr     String
-  equipped Boolean
-  knightId String  @db.ObjectId
-  knight   Knights @relation(fields: [knightId], references: [id])
+enum AttributeKey {
+  strength
+  dexterity
+  constitution
+  intelligence
+  wisdom
+  charisma
 }
 
-model Attributes {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  strength     Int
-  dexterity    Int
-  constitution Int
-  intelligence Int
-  wisdom       Int
-  charisma     Int
-  knightId     String    @unique @db.ObjectId
-  Knight       Knights[]
-}
-
-model Knights {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+model Knight {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  nickname     String     @unique
-  birthday     String
-  weapons      Weapons[]
-  attributesId String     @db.ObjectId
-  attributes   Attributes @relation(fields: [attributesId], references: [id])
-  keyAttribute String
-  Heroes       Heroes[]
-  createdAt    DateTime   @default(now())
-}
-
-model Heroes {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  knightId    String   @unique @db.ObjectId
-  knight      Knights  @relation(fields: [knightId], references: [id])
-  heroifiedAt DateTime @default(now())
+  nickname     String       @unique
+  birthday     DateTime
+  weapons      Json[]
+  attributes   Json
+  keyAttribute AttributeKey
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime?
+  heroifiedAt  DateTime?
 }
