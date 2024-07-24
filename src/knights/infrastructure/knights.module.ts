@@ -23,7 +23,7 @@ import KnightRepository from '../domain/repositories/knight.repository';
       useFactory: (knightRepository: KnightRepository.Repository) => {
         return new CreateKnightUseCase.UseCase(knightRepository);
       },
-      inject: ['UserRepository', 'HashProvider'],
+      inject: ['KnightRepository'],
     },
   ],
 })
