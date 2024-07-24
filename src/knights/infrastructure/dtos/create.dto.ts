@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { CreateKnightUseCase } from '@/knights/application/usecases/create-knight.usecase';
 import { Attributes } from '@/knights/domain/entities/knight.entity';
 import {
@@ -15,6 +16,7 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 class AttributesDto {
   @IsNumber()
@@ -76,6 +78,7 @@ export class CreateDto implements CreateKnightUseCase.Input {
   nickname: string;
 
   @IsDate()
+  @Type(() => Date)
   birthday: Date;
 
   @IsArray()
@@ -92,6 +95,7 @@ export class CreateDto implements CreateKnightUseCase.Input {
   keyAttribute: keyof Attributes;
 
   @IsDate()
+  @Type(() => Date)
   @IsOptional()
   createdAt?: Date;
 }

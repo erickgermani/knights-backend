@@ -17,6 +17,7 @@ import KnightRepository from '../domain/repositories/knight.repository';
       useFactory: (prismaService: PrismaService) => {
         return new KnightPrismaRepository(prismaService);
       },
+      inject: ['PrismaService'],
     },
     {
       provide: CreateKnightUseCase.UseCase,
