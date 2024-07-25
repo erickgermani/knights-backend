@@ -48,7 +48,9 @@ export class KnightEntity extends Entity<KnightProps> {
   ) {
     KnightEntity.validate(props);
     super(props, id);
+    this.props.heroifiedAt = this.props.heroifiedAt ?? null;
     this.props.createdAt = this.props.createdAt ?? new Date();
+    this.props.updatedAt = this.props.updatedAt ?? null;
   }
 
   get name() {
