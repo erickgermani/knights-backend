@@ -4,40 +4,8 @@ import { ListKnightsUseCase } from '@/knights/application/usecases/list-knights.
 import { Attributes, Weapon } from '@/knights/domain/entities/knight.entity';
 import { Transform } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
-class SolidWeapon implements Weapon {
-  @ApiProperty({ description: 'Weapon name' })
-  name: string;
-
-  @ApiProperty({ description: 'Weapon mod' })
-  mod: number;
-
-  @ApiProperty({ description: 'Weapon attr', type: String })
-  attr: keyof Attributes;
-
-  @ApiProperty({ description: 'Weapon equipped' })
-  equipped: boolean;
-}
-
-class SolidAttributes implements Attributes {
-  @ApiProperty({ description: 'Knight strength' })
-  strength: number;
-
-  @ApiProperty({ description: 'Knight dexterity' })
-  dexterity: number;
-
-  @ApiProperty({ description: 'Knight constitution' })
-  constitution: number;
-
-  @ApiProperty({ description: 'Knight intelligence' })
-  intelligence: number;
-
-  @ApiProperty({ description: 'Knight wisdom' })
-  wisdom: number;
-
-  @ApiProperty({ description: 'Knight charisma' })
-  charisma: number;
-}
+import { WeaponDto } from '../dtos/weapon.dto';
+import { AttributesDto } from '../dtos/attributes.dto';
 
 class KnightPresenter {
   @ApiProperty({ description: 'Knight id' })
@@ -53,11 +21,11 @@ class KnightPresenter {
   @Transform(({ value }: { value: Date }) => value.toISOString())
   birthday: Date;
 
-  @ApiProperty({ description: 'Knight weapons', type: [SolidWeapon] })
-  weapons: SolidWeapon[];
+  @ApiProperty({ description: 'Knight weapons', type: [WeaponDto] })
+  weapons: Weapon[];
 
-  @ApiProperty({ description: 'Knight attributes' })
-  attributes: SolidAttributes;
+  @ApiProperty({ description: 'Knight attributes', type: [AttributesDto] })
+  attributes: Attributes;
 
   @ApiProperty({ description: 'Knight key attribute', type: String })
   keyAttribute: keyof Attributes;
