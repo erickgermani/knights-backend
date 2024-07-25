@@ -66,7 +66,7 @@ describe('KnightsController e2e tests', () => {
   });
 
   describe('POST /knights', () => {
-    it('should create a knight', async () => {
+    it('Should create a knight', async () => {
       const res = await request(app.getHttpServer())
         .post('/knights')
         .send(createDto)
@@ -83,7 +83,7 @@ describe('KnightsController e2e tests', () => {
       expect(res.body.data).toMatchObject(serialized);
     });
 
-    it('should return an error with 422 code when the request body is invalid', async () => {
+    it('Should return an error with 422 code when the request body is invalid', async () => {
       const res = await request(app.getHttpServer())
         .post('/knights')
         .send({})
@@ -106,7 +106,7 @@ describe('KnightsController e2e tests', () => {
       ]);
     });
 
-    it('should return an error with 422 code when the name field is invalid', async () => {
+    it('Should return an error with 422 code when the name field is invalid', async () => {
       delete createDto.name;
 
       const res = await request(app.getHttpServer())
@@ -121,7 +121,7 @@ describe('KnightsController e2e tests', () => {
       ]);
     });
 
-    it('should return an error with 422 code when the birthday field is invalid', async () => {
+    it('Should return an error with 422 code when the birthday field is invalid', async () => {
       delete createDto.birthday;
 
       const res = await request(app.getHttpServer())
@@ -133,7 +133,7 @@ describe('KnightsController e2e tests', () => {
       expect(res.body.message).toEqual(['birthday must be a Date instance']);
     });
 
-    it('should return an error with 422 code with invalid field provided', async () => {
+    it('Should return an error with 422 code with invalid field provided', async () => {
       const res = await request(app.getHttpServer())
         .post('/knights')
         .send({ ...createDto, invalidField: 'invalid' })
@@ -145,7 +145,7 @@ describe('KnightsController e2e tests', () => {
       ]);
     });
 
-    it('should return an error with 409 code when nickname is duplicated', async () => {
+    it('Should return an error with 409 code when nickname is duplicated', async () => {
       const entity = new KnightEntity(KnightDataBuilder({ ...createDto }));
 
       await repository.insert(entity);

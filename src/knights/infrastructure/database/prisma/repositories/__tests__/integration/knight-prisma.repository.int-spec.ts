@@ -109,8 +109,7 @@ describe('KnightPrismaRepository integration tests', () => {
     );
   });
 
-  // TODO corrigir esse describe
-  describe.skip('Search method tests', () => {
+  describe('Search method tests', () => {
     it('Should apply only pagination when the other params are null', async () => {
       const createdAt = new Date();
 
@@ -122,6 +121,7 @@ describe('KnightPrismaRepository integration tests', () => {
           new KnightEntity({
             ...element,
             name: `Knight #${index}`,
+            nickname: `Knight #${index}`,
             createdAt: new Date(createdAt.getTime() + index * 1000),
           }),
         );
@@ -152,12 +152,12 @@ describe('KnightPrismaRepository integration tests', () => {
       });
     });
 
-    it.skip('Should search using filter, sort and paginate', async () => {
+    it('Should search using filter, sort and paginate', async () => {
       const createdAt = new Date();
 
       const entities: KnightEntity[] = [];
 
-      const arrange = ['test', 'a', 'TEST', 'b', 'TeSt'];
+      const arrange = ['test1', 'a', 'test3', 'b', 'test2'];
 
       arrange.forEach((element, index) => {
         entities.push(

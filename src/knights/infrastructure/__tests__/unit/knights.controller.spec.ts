@@ -4,6 +4,8 @@ import { CreateKnightUseCase } from '@/knights/application/usecases/create-knigh
 import { CreateDto } from '../../dtos/create.dto';
 import KnightPresenter from '../../presenters/knight.presenter';
 import { GetKnightUseCase } from '@/knights/application/usecases/get-knight.usecase';
+import UpdateKnightUseCase from '@/knights/application/usecases/update-knight.usecase';
+import { UpdateKnightDto } from '../../dtos/update-knight.dto';
 
 describe('KnightsController', () => {
   let sut: KnightsController;
@@ -100,6 +102,29 @@ describe('KnightsController', () => {
     expect(presenter).toStrictEqual(new KnightPresenter(output));
     expect(mockGetKnightUseCase.execute).toHaveBeenCalledWith({
       id,
+    });
+  });
+
+  it('Should update a knight', async () => {
+    const output: UpdateKnightUseCase.Output = props;
+
+    const mockUpdateKnightUseCase = {
+      execute: jest.fn().mockReturnValue(Promise.resolve(output)),
+    };
+
+    sut['updateKnightUseCase'] = mockUpdateKnightUseCase as any;
+
+    const input: UpdateKnightDto = {
+      nickname: 'new nickname',
+    };
+
+    const presenter = await sut.update(id, input);
+
+    expect(presenter).toBeInstanceOf(KnightPresenter);
+    expect(presenter).toStrictEqual(new KnightPresenter(output));
+    expect(mockUpdateKnightUseCase.execute).toHaveBeenCalledWith({
+      id,
+      ...input,
     });
   });
 });

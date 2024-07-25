@@ -26,11 +26,11 @@ describe('NotFoundErrorFilter e2e tests', () => {
     await app.init();
   });
 
-  it('should be defined', () => {
+  it('Should be defined', () => {
     expect(new NotFoundErrorFilter()).toBeDefined();
   });
 
-  it('should catch a NotFoundError', () => {
+  it('Should catch a NotFoundError', () => {
     return request(app.getHttpServer()).get('/stub').expect(404).expect({
       statusCode: 404,
       message: 'UserModel not found',

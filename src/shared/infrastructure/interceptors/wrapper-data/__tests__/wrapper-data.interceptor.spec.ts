@@ -14,11 +14,11 @@ describe('WrapperDataInterceptor', () => {
     };
   });
 
-  it('should be defined', () => {
+  it('Should be defined', () => {
     expect(interceptor).toBeDefined();
   });
 
-  it('should wrapper with data key', () => {
+  it('Should wrapper with data key', () => {
     const obs$ = interceptor.intercept({} as any, {
       handle: () => of(props),
     });
@@ -30,7 +30,7 @@ describe('WrapperDataInterceptor', () => {
     });
   });
 
-  it('should not wrapper when meta key is present', () => {
+  it('Should not wrapper when meta key is present', () => {
     const result = { data: [props], meta: { total: 1 } };
 
     const obs$ = interceptor.intercept({} as any, {

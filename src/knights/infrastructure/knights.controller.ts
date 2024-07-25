@@ -5,6 +5,7 @@ import {
   Inject,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { CreateKnightUseCase } from '../application/usecases/create-knight.usecase';
@@ -16,6 +17,8 @@ import { ListKnightsUseCase } from '../application/usecases/list-knights.usecase
 import { CreateDto } from './dtos/create.dto';
 import { GetKnightUseCase } from '../application/usecases/get-knight.usecase';
 import { ListKnightsDto } from './dtos/list-knights.dto';
+import { UpdateKnightDto } from './dtos/update-knight.dto';
+import UpdateKnightUseCase from '../application/usecases/update-knight.usecase';
 
 @Controller('knights')
 export class KnightsController {
@@ -27,6 +30,9 @@ export class KnightsController {
 
   @Inject(ListKnightsUseCase.UseCase)
   private listKnightsUseCase: ListKnightsUseCase.UseCase;
+
+  @Inject(UpdateKnightUseCase.UseCase)
+  private updateKnightUseCase: UpdateKnightUseCase.UseCase;
 
   static knightToResponse(output: KnightOutput) {
     return new KnightPresenter(output);
@@ -51,6 +57,18 @@ export class KnightsController {
   @Get(':id')
   async get(@Param('id') id: string) {
     const output = await this.getKnightUseCase.execute({ id });
+    return KnightsController.knightToResponse(output);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateKnightDto: UpdateKnightDto,
+  ) {
+    const output = await this.updateKnightUseCase.execute({
+      id,
+      ...updateKnightDto,
+    });
     return KnightsController.knightToResponse(output);
   }
 }

@@ -12,15 +12,16 @@ import { instanceToPlain } from 'class-transformer';
 import { applyGlobalConfig } from '@/global-config';
 import { KnightEntity } from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
+import { UpdateKnightDto } from '../../dtos/update-knight.dto';
 
 describe('KnightsController e2e tests', () => {
   let app: INestApplication;
   let module: TestingModule;
   let repository: KnightRepository.Repository;
+  let updateKnightDto: UpdateKnightDto;
   let entity: KnightEntity;
   const prismaService = new PrismaClient();
 
-  // TODO otimizar para não necessitar de um timeout de 15s
   beforeAll(async () => {
     setupPrismaTests();
 
@@ -36,9 +37,13 @@ describe('KnightsController e2e tests', () => {
     applyGlobalConfig(app);
     await app.init();
     repository = module.get<KnightRepository.Repository>('KnightRepository');
-  }, 15000);
+  }, 10000);
 
   beforeEach(async () => {
+    updateKnightDto = {
+      nickname: 'test nickname',
+    };
+
     await prismaService.knight.deleteMany();
 
     entity = new KnightEntity(KnightDataBuilder());
@@ -46,22 +51,41 @@ describe('KnightsController e2e tests', () => {
     await repository.insert(entity);
   });
 
-  describe('GET /knights/:id', () => {
-    it('Should get an knight', async () => {
+  describe('PUT /knights', () => {
+    it('should update an knight', async () => {
+      updateKnightDto.nickname = 'updated nickname';
+
       const res = await request(app.getHttpServer())
-        .get('/knights/' + entity.id)
+        .put('/knights/' + entity.id)
+        .send(updateKnightDto)
         .expect(200);
 
-      const presenter = KnightsController.knightToResponse(entity.toJSON());
+      const knight = await repository.findById(entity._id);
+
+      const presenter = KnightsController.knightToResponse(knight.toJSON());
 
       const serialized = instanceToPlain(presenter);
 
-      expect(res.body.data).toMatchObject(serialized);
+      expect(res.body.data).toStrictEqual(serialized);
     });
 
-    it('Should return an error with 404 code when the throw NotFoundError with invalid id', async () => {
+    it('should return an error with 422 code when the request body is invalid', async () => {
+      const res = await request(app.getHttpServer())
+        .put('/knights/' + entity.id)
+        .send({})
+        .expect(422);
+
+      expect(res.body.error).toBe('Unprocessable Entity');
+      expect(res.body.message).toEqual([
+        'nickname should not be empty',
+        'nickname must be a string',
+      ]);
+    });
+
+    it('should return an error with 404 code when the throw NotFoundError with invalid id', async () => {
       await request(app.getHttpServer())
-        .get('/knights/fakeId')
+        .put('/knights/fakeId')
+        .send(updateKnightDto)
         .expect(404)
         .expect({
           statusCode: 404,

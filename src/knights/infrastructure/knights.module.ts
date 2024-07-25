@@ -6,6 +6,7 @@ import { CreateKnightUseCase } from '../application/usecases/create-knight.useca
 import KnightRepository from '../domain/repositories/knight.repository';
 import { GetKnightUseCase } from '../application/usecases/get-knight.usecase';
 import { ListKnightsUseCase } from '../application/usecases/list-knights.usecase';
+import UpdateKnightUseCase from '../application/usecases/update-knight.usecase';
 
 @Module({
   controllers: [KnightsController],
@@ -39,6 +40,13 @@ import { ListKnightsUseCase } from '../application/usecases/list-knights.usecase
       provide: ListKnightsUseCase.UseCase,
       useFactory: (knightRepository: KnightRepository.Repository) => {
         return new ListKnightsUseCase.UseCase(knightRepository);
+      },
+      inject: ['KnightRepository'],
+    },
+    {
+      provide: UpdateKnightUseCase.UseCase,
+      useFactory: (knightRepository: KnightRepository.Repository) => {
+        return new UpdateKnightUseCase.UseCase(knightRepository);
       },
       inject: ['KnightRepository'],
     },
