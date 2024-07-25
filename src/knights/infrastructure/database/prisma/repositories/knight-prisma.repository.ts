@@ -20,21 +20,6 @@ class KnightPrismaRepository implements KnightRepository.Repository {
     if (knight) throw new ConflictError('Nickname already used');
   }
 
-  async heroify(id: string): Promise<KnightEntity> {
-    await this._get(id);
-
-    const model = await this.prismaService.knight.update({
-      where: {
-        id,
-      },
-      data: {
-        heroifiedAt: new Date(),
-      },
-    });
-
-    return KnightModelMapper.toEntity(model);
-  }
-
   async search(
     props: KnightRepository.SearchParams,
   ): Promise<KnightRepository.SearchResult> {
@@ -107,6 +92,7 @@ class KnightPrismaRepository implements KnightRepository.Repository {
 
   async update(entity: KnightEntity): Promise<void> {
     await this._get(entity._id);
+
     await this.prismaService.knight.update({
       where: {
         id: entity._id,
@@ -118,6 +104,8 @@ class KnightPrismaRepository implements KnightRepository.Repository {
         attributes: entity.attributes,
         birthday: entity.birthday,
         keyAttribute: entity.keyAttribute,
+        heroifiedAt: entity.heroifiedAt,
+        updatedAt: new Date(),
       },
     });
   }

@@ -107,6 +107,10 @@ export class KnightEntity extends Entity<KnightProps> {
     this.nickname = value;
   }
 
+  heroify() {
+    this.heroifiedAt = new Date();
+  }
+
   // private calculateAge(birthday: Date) {
   //   const today = new Date();
 
@@ -168,19 +172,4 @@ export class KnightEntity extends Entity<KnightProps> {
 
     if (!isValid) throw new EntityValidationError(validator.errors);
   }
-
-  // toJSON() {
-  //   return {
-  //     id: this.id,
-  //     name: this.name,
-  //     nickname: this.nickname,
-  //     birthday: this.birthday,
-  //     weapons: this.weapons,
-  //     attributes: this.attributes,
-  //     keyAttribute: this.keyAttribute,
-  //     heroifiedAt: this.heroifiedAt,
-  //     createdAt: this.createdAt,
-  //     updatedAt: this.updatedAt,
-  //   };
-  // }
 }

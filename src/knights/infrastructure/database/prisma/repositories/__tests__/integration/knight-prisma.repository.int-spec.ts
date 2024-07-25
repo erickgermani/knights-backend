@@ -271,29 +271,6 @@ describe('KnightPrismaRepository integration tests', () => {
     );
   });
 
-  it('Should heroify a knight', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
-
-    await prismaService.knight.create({
-      data: {
-        id: entity.id,
-        name: entity.name,
-        nickname: entity.nickname,
-        weapons: entity.weapons,
-        attributes: entity.attributes,
-        birthday: entity.birthday,
-        keyAttribute: entity.keyAttribute,
-        createdAt: entity.createdAt,
-      },
-    });
-
-    const result = await sut.heroify(entity.id);
-
-    expect(result.toJSON()).toStrictEqual(
-      Object.assign(entity.toJSON(), { heroifiedAt: result.heroifiedAt }),
-    );
-  });
-
   it('Should throws error when entity found by nickname', async () => {
     const entity = new KnightEntity(
       KnightDataBuilder({ nickname: 'test nickname' }),

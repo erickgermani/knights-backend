@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Inject,
   Param,
   Post,
@@ -19,6 +21,7 @@ import { GetKnightUseCase } from '../application/usecases/get-knight.usecase';
 import { ListKnightsDto } from './dtos/list-knights.dto';
 import { UpdateKnightDto } from './dtos/update-knight.dto';
 import UpdateKnightUseCase from '../application/usecases/update-knight.usecase';
+import { HeroifyKnightUseCase } from '../application/usecases/heroify-knight.usecase';
 
 @Controller('knights')
 export class KnightsController {
@@ -33,6 +36,9 @@ export class KnightsController {
 
   @Inject(UpdateKnightUseCase.UseCase)
   private updateKnightUseCase: UpdateKnightUseCase.UseCase;
+
+  @Inject(HeroifyKnightUseCase.UseCase)
+  private heroifyKnightUseCase: HeroifyKnightUseCase.UseCase;
 
   static knightToResponse(output: KnightOutput) {
     return new KnightPresenter(output);
@@ -70,5 +76,11 @@ export class KnightsController {
       ...updateKnightDto,
     });
     return KnightsController.knightToResponse(output);
+  }
+
+  @HttpCode(204)
+  @Delete(':id')
+  async heroify(@Param('id') id: string) {
+    await this.heroifyKnightUseCase.execute({ id });
   }
 }
