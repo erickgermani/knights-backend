@@ -24,8 +24,8 @@ import UpdateKnightUseCase from '../application/usecases/update-knight.usecase';
 import { HeroifyKnightUseCase } from '../application/usecases/heroify-knight.usecase';
 import { ApiResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
 
-@ApiTags('knights')
-@Controller('knights')
+@ApiTags('v1/knights')
+@Controller('v1/knights')
 export class KnightsController {
   @Inject(CreateKnightUseCase.UseCase)
   private createKnightUseCase: CreateKnightUseCase.UseCase;
