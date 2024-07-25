@@ -113,7 +113,7 @@ describe('KnightsController e2e tests', () => {
         perPage: 2,
         sort: 'name',
         sortDir: 'asc',
-        filter: 'TEST',
+        filterBy: 'TEST',
       };
 
       let queryParams = new URLSearchParams(searchParams as any).toString();
@@ -140,7 +140,7 @@ describe('KnightsController e2e tests', () => {
         perPage: 2,
         sort: 'name',
         sortDir: 'asc',
-        filter: 'TEST',
+        filterBy: 'TEST',
       };
 
       queryParams = new URLSearchParams(searchParams as any).toString();

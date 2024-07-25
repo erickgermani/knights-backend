@@ -5,5 +5,5 @@ export type SearchInput<Filter = string> = {
   perPage?: number;
   sort?: string | null;
   sortDir?: SortDirection | null;
-  filter?: Filter | null;
+  filterBy?: Filter | null;
 };

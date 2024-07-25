@@ -20,12 +20,12 @@ export default class KnightInMemoryRepository
 
   protected async applyFilter(
     items: KnightEntity[],
-    filter: KnightRepository.Filter,
+    filterBy: KnightRepository.Filter,
   ): Promise<KnightEntity[]> {
-    if (!filter) return items;
+    if (!filterBy) return items;
 
     return items.filter((item) =>
-      item.props.name.toLowerCase().includes(filter.toLowerCase()),
+      item.props.name.toLowerCase().includes(filterBy.toLowerCase()),
     );
   }
 

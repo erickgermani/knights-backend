@@ -16,5 +16,5 @@ export class ListKnightsDto implements ListKnightsUseCase.Input {
   sortDir?: SortDirection;
 
   @IsOptional()
-  filter?: string;
+  filterBy?: string;
 }

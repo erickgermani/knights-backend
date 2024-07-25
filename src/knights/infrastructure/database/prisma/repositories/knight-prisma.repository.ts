@@ -28,10 +28,10 @@ class KnightPrismaRepository implements KnightRepository.Repository {
     const orderByDir = sortable ? props.sortDir : 'desc';
 
     const count = await this.prismaService.knight.count({
-      ...(props.filter && {
+      ...(props.filterBy && {
         where: {
           name: {
-            contains: props.filter,
+            contains: props.filterBy,
             mode: 'insensitive',
           },
         },
@@ -39,10 +39,10 @@ class KnightPrismaRepository implements KnightRepository.Repository {
     });
 
     const models = await this.prismaService.knight.findMany({
-      ...(props.filter && {
+      ...(props.filterBy && {
         where: {
           name: {
-            contains: props.filter,
+            contains: props.filterBy,
             mode: 'insensitive',
           },
         },
@@ -61,7 +61,7 @@ class KnightPrismaRepository implements KnightRepository.Repository {
       perPage: props.perPage,
       sort: orderByField,
       sortDir: orderByDir,
-      filter: props.filter,
+      filterBy: props.filterBy,
     });
   }
 

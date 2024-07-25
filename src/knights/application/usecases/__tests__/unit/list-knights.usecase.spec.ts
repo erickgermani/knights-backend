@@ -21,7 +21,7 @@ describe('ListKnightsUseCase unit tests', () => {
       perPage: 2,
       sort: null,
       sortDir: null,
-      filter: null,
+      filterBy: null,
     });
 
     let output = sut['toOutput'](result);
@@ -43,7 +43,7 @@ describe('ListKnightsUseCase unit tests', () => {
       perPage: 2,
       sort: null,
       sortDir: null,
-      filter: null,
+      filterBy: null,
     });
 
     output = sut['toOutput'](result);
@@ -96,7 +96,7 @@ describe('ListKnightsUseCase unit tests', () => {
       perPage: 2,
       sort: 'name',
       sortDir: 'asc',
-      filter: 'a',
+      filterBy: 'a',
     });
 
     expect(output).toStrictEqual({
@@ -112,7 +112,7 @@ describe('ListKnightsUseCase unit tests', () => {
       perPage: 2,
       sort: 'name',
       sortDir: 'asc',
-      filter: 'a',
+      filterBy: 'a',
     });
 
     expect(output).toStrictEqual({
@@ -128,7 +128,7 @@ describe('ListKnightsUseCase unit tests', () => {
       perPage: 3,
       sort: 'name',
       sortDir: 'desc',
-      filter: 'a',
+      filterBy: 'a',
     });
 
     expect(output).toStrictEqual({

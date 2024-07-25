@@ -115,23 +115,25 @@ describe('Searchable Repository unit tests', () => {
     it('filter prop', () => {
       const sut = new SearchParams();
 
-      expect(sut.filter).toBeNull();
+      expect(sut.filterBy).toBeNull();
 
       const params = [
-        { filter: null as any, expected: null },
-        { filter: undefined, expected: null },
-        { filter: '', expected: null },
-        { filter: 'test', expected: 'test' },
-        { filter: 0, expected: '0' },
-        { filter: -1, expected: '-1' },
-        { filter: 5.5, expected: '5.5' },
-        { filter: true, expected: 'true' },
-        { filter: false, expected: 'false' },
-        { filter: {}, expected: '[object Object]' },
+        { filterBy: null as any, expected: null },
+        { filterBy: undefined, expected: null },
+        { filterBy: '', expected: null },
+        { filterBy: 'test', expected: 'test' },
+        { filterBy: 0, expected: '0' },
+        { filterBy: -1, expected: '-1' },
+        { filterBy: 5.5, expected: '5.5' },
+        { filterBy: true, expected: 'true' },
+        { filterBy: false, expected: 'false' },
+        { filterBy: {}, expected: '[object Object]' },
       ];
 
       params.forEach((i) => {
-        expect(new SearchParams({ filter: i.filter }).filter).toBe(i.expected);
+        expect(new SearchParams({ filterBy: i.filterBy }).filterBy).toBe(
+          i.expected,
+        );
       });
     });
   });
@@ -145,7 +147,7 @@ describe('Searchable Repository unit tests', () => {
         perPage: 2,
         sort: null,
         sortDir: null,
-        filter: null,
+        filterBy: null,
       });
 
       expect(sut.toJSON()).toStrictEqual({
@@ -156,7 +158,7 @@ describe('Searchable Repository unit tests', () => {
         lastPage: 2,
         sort: null,
         sortDir: null,
-        filter: null,
+        filterBy: null,
       });
 
       sut = new SearchResult({
@@ -166,7 +168,7 @@ describe('Searchable Repository unit tests', () => {
         perPage: 2,
         sort: 'name',
         sortDir: 'asc',
-        filter: 'test',
+        filterBy: 'test',
       });
 
       expect(sut.toJSON()).toStrictEqual({
@@ -177,7 +179,7 @@ describe('Searchable Repository unit tests', () => {
         lastPage: 2,
         sort: 'name',
         sortDir: 'asc',
-        filter: 'test',
+        filterBy: 'test',
       });
 
       sut = new SearchResult({
@@ -187,7 +189,7 @@ describe('Searchable Repository unit tests', () => {
         perPage: 10,
         sort: 'name',
         sortDir: 'asc',
-        filter: 'test',
+        filterBy: 'test',
       });
 
       expect(sut.lastPage).toBe(1);
@@ -199,7 +201,7 @@ describe('Searchable Repository unit tests', () => {
         perPage: 10,
         sort: 'name',
         sortDir: 'asc',
-        filter: 'test',
+        filterBy: 'test',
       });
 
       expect(sut.lastPage).toBe(6);

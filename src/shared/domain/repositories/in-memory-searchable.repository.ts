@@ -15,7 +15,7 @@ export abstract class InMemorySearchableRepository<E extends Entity>
   async search(props: SearchParams): Promise<SearchResult<E>> {
     const items = await this.findAll();
 
-    const itemsFiltered = await this.applyFilter(items, props.filter);
+    const itemsFiltered = await this.applyFilter(items, props.filterBy);
 
     const itemsSorted = await this.applySort(
       itemsFiltered,
@@ -36,13 +36,13 @@ export abstract class InMemorySearchableRepository<E extends Entity>
       perPage: props.perPage,
       sort: props.sort,
       sortDir: props.sortDir,
-      filter: props.filter,
+      filterBy: props.filterBy,
     });
   }
 
   protected abstract applyFilter(
     items: E[],
-    filter: string | null,
+    filterBy: string | null,
   ): Promise<E[]>;
 
   protected async applySort(

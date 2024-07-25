@@ -17,12 +17,12 @@ class StubInMemorySearchableRepository extends InMemorySearchableRepository<Stub
 
   protected async applyFilter(
     items: StubEntity[],
-    filter: string | null,
+    filterBy: string | null,
   ): Promise<StubEntity[]> {
-    if (!filter) return items;
+    if (!filterBy) return items;
 
     return items.filter((item) =>
-      item.props.name.toLowerCase().includes(filter.toLowerCase()),
+      item.props.name.toLowerCase().includes(filterBy.toLowerCase()),
     );
   }
 }
@@ -153,7 +153,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 15,
           sort: null,
           sortDir: null,
-          filter: null,
+          filterBy: null,
         }),
       );
     });
@@ -171,7 +171,7 @@ describe('InMemorySearchableRepository unit tests', () => {
         new SearchParams({
           page: 1,
           perPage: 2,
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
 
@@ -183,7 +183,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: null,
           sortDir: null,
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
 
@@ -191,7 +191,7 @@ describe('InMemorySearchableRepository unit tests', () => {
         new SearchParams({
           page: 2,
           perPage: 2,
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
 
@@ -203,7 +203,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: null,
           sortDir: null,
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
     });
@@ -234,7 +234,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'asc',
-          filter: null,
+          filterBy: null,
         }),
       );
 
@@ -254,7 +254,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'asc',
-          filter: null,
+          filterBy: null,
         }),
       );
 
@@ -275,7 +275,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'desc',
-          filter: null,
+          filterBy: null,
         }),
       );
 
@@ -296,7 +296,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'desc',
-          filter: null,
+          filterBy: null,
         }),
       );
     });
@@ -317,7 +317,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'desc',
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
 
@@ -329,7 +329,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'desc',
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
 
@@ -339,7 +339,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'desc',
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
 
@@ -351,7 +351,7 @@ describe('InMemorySearchableRepository unit tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'desc',
-          filter: 'TEST',
+          filterBy: 'TEST',
         }),
       );
     });

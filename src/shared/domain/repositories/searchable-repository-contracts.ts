@@ -8,7 +8,7 @@ export type SearchProps<Filter = string> = {
   perPage?: number;
   sort?: string | null;
   sortDir?: SortDirection | null;
-  filter?: Filter | null;
+  filterBy?: Filter | null;
 };
 
 export class SearchParams<Filter = string> {
@@ -16,14 +16,14 @@ export class SearchParams<Filter = string> {
   protected _perPage: number = 15;
   protected _sort: null | string;
   protected _sortDir: SortDirection | null;
-  protected _filter: Filter | null;
+  protected _filterBy: Filter | null;
 
   constructor(props: SearchProps<Filter> = {}) {
     this.page = props.page;
     this.perPage = props.perPage;
     this.sort = props.sort;
     this.sortDir = props.sortDir;
-    this.filter = props.filter;
+    this.filterBy = props.filterBy;
   }
 
   get page() {
@@ -80,12 +80,12 @@ export class SearchParams<Filter = string> {
     this._sortDir = dir !== 'asc' && dir !== 'desc' ? 'asc' : dir;
   }
 
-  get filter(): Filter | null {
-    return this._filter;
+  get filterBy(): Filter | null {
+    return this._filterBy;
   }
 
-  private set filter(value: Filter | null) {
-    this._filter =
+  private set filterBy(value: Filter | null) {
+    this._filterBy =
       value === null || value === undefined || value === ''
         ? null
         : (`${value}` as any);
@@ -99,7 +99,7 @@ export type SearchResultProps<E extends Entity, Filter> = {
   perPage: number;
   sort: string | null;
   sortDir: string | null;
-  filter: Filter | null;
+  filterBy: Filter | null;
 };
 
 export class SearchResult<E extends Entity, Filter = string> {
@@ -110,7 +110,7 @@ export class SearchResult<E extends Entity, Filter = string> {
   readonly lastPage: number;
   readonly sort: string | null;
   readonly sortDir: string | null;
-  readonly filter: Filter | null;
+  readonly filterBy: Filter | null;
 
   constructor(props: SearchResultProps<E, Filter>) {
     this.items = props.items;
@@ -120,7 +120,7 @@ export class SearchResult<E extends Entity, Filter = string> {
     this.lastPage = Math.ceil(this.total / this.perPage);
     this.sort = props.sort ?? null;
     this.sortDir = props.sortDir ?? null;
-    this.filter = props.filter ?? null;
+    this.filterBy = props.filterBy ?? null;
   }
 
   toJSON(forceEntity = false) {
@@ -132,7 +132,7 @@ export class SearchResult<E extends Entity, Filter = string> {
       lastPage: this.lastPage,
       sort: this.sort,
       sortDir: this.sortDir,
-      filter: this.filter,
+      filterBy: this.filterBy,
     };
   }
 }

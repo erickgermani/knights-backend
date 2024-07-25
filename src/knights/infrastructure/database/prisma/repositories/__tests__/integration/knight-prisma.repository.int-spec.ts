@@ -178,7 +178,7 @@ describe('KnightPrismaRepository integration tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'asc',
-          filter: 'test',
+          filterBy: 'test',
         }),
       );
 
@@ -195,7 +195,7 @@ describe('KnightPrismaRepository integration tests', () => {
           perPage: 2,
           sort: 'name',
           sortDir: 'asc',
-          filter: 'test',
+          filterBy: 'test',
         }),
       );
 
