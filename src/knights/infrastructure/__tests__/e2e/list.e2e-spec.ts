@@ -71,7 +71,7 @@ describe('KnightsController e2e tests', () => {
       const queryParams = new URLSearchParams(searchParams).toString();
 
       const res = await request(app.getHttpServer())
-        .get(`/knights/?${queryParams}`)
+        .get(`/v1/knights/?${queryParams}`)
         .expect(200);
 
       expect(Object.keys(res.body)).toStrictEqual(['data', 'meta']);
@@ -119,7 +119,7 @@ describe('KnightsController e2e tests', () => {
       let queryParams = new URLSearchParams(searchParams as any).toString();
 
       let res = await request(app.getHttpServer())
-        .get(`/knights/?${queryParams}`)
+        .get(`/v1/knights/?${queryParams}`)
         .expect(200);
 
       expect(Object.keys(res.body)).toStrictEqual(['data', 'meta']);
@@ -146,7 +146,7 @@ describe('KnightsController e2e tests', () => {
       queryParams = new URLSearchParams(searchParams as any).toString();
 
       res = await request(app.getHttpServer())
-        .get(`/knights/?${queryParams}`)
+        .get(`/v1/knights/?${queryParams}`)
         .expect(200);
 
       expect(Object.keys(res.body)).toStrictEqual(['data', 'meta']);
@@ -166,7 +166,7 @@ describe('KnightsController e2e tests', () => {
 
   it('should return an error with 422 code when the query params is invalid', async () => {
     const res = await request(app.getHttpServer())
-      .get('/knights/?fakeId=10')
+      .get('/v1/knights/?fakeId=10')
       .expect(422);
 
     expect(res.body.error).toBe('Unprocessable Entity');

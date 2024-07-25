@@ -57,7 +57,7 @@ describe('KnightsController e2e tests', () => {
       updateKnightDto.nickname = 'updated nickname';
 
       const res = await request(app.getHttpServer())
-        .put('/knights/' + entity.id)
+        .put('/v1/knights/' + entity.id)
         .send(updateKnightDto)
         .expect(200);
 
@@ -72,7 +72,7 @@ describe('KnightsController e2e tests', () => {
 
     it('should return an error with 422 code when the request body is invalid', async () => {
       const res = await request(app.getHttpServer())
-        .put('/knights/' + entity.id)
+        .put('/v1/knights/' + entity.id)
         .send({})
         .expect(422);
 
@@ -85,7 +85,7 @@ describe('KnightsController e2e tests', () => {
 
     it('should return an error with 404 code when the throw NotFoundError with invalid id', async () => {
       await request(app.getHttpServer())
-        .put('/knights/fakeId')
+        .put('/v1/knights/fakeId')
         .send(updateKnightDto)
         .expect(404)
         .expect({

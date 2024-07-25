@@ -68,7 +68,7 @@ describe('KnightsController e2e tests', () => {
   describe('POST /knights', () => {
     it('Should create a knight', async () => {
       const res = await request(app.getHttpServer())
-        .post('/knights')
+        .post('/v1/knights')
         .send(createDto)
         .expect(201);
 
@@ -85,7 +85,7 @@ describe('KnightsController e2e tests', () => {
 
     it('Should return an error with 422 code when the request body is invalid', async () => {
       const res = await request(app.getHttpServer())
-        .post('/knights')
+        .post('/v1/knights')
         .send({})
         .expect(422);
 
@@ -110,7 +110,7 @@ describe('KnightsController e2e tests', () => {
       delete createDto.name;
 
       const res = await request(app.getHttpServer())
-        .post('/knights')
+        .post('/v1/knights')
         .send(createDto)
         .expect(422);
 
@@ -125,7 +125,7 @@ describe('KnightsController e2e tests', () => {
       delete createDto.birthday;
 
       const res = await request(app.getHttpServer())
-        .post('/knights')
+        .post('/v1/knights')
         .send(createDto)
         .expect(422);
 
@@ -135,7 +135,7 @@ describe('KnightsController e2e tests', () => {
 
     it('Should return an error with 422 code with invalid field provided', async () => {
       const res = await request(app.getHttpServer())
-        .post('/knights')
+        .post('/v1/knights')
         .send({ ...createDto, invalidField: 'invalid' })
         .expect(422);
 
@@ -151,7 +151,7 @@ describe('KnightsController e2e tests', () => {
       await repository.insert(entity);
 
       await request(app.getHttpServer())
-        .post('/knights')
+        .post('/v1/knights')
         .send(createDto)
         .expect(409)
         .expect({

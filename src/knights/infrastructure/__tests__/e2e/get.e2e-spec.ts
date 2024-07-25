@@ -49,7 +49,7 @@ describe('KnightsController e2e tests', () => {
   describe('GET /knights/:id', () => {
     it('Should get an knight', async () => {
       const res = await request(app.getHttpServer())
-        .get('/knights/' + entity.id)
+        .get('/v1/knights/' + entity.id)
         .expect(200);
 
       const presenter = KnightsController.knightToResponse(entity.toJSON());
@@ -61,7 +61,7 @@ describe('KnightsController e2e tests', () => {
 
     it('Should return an error with 404 code when the throw NotFoundError with invalid id', async () => {
       await request(app.getHttpServer())
-        .get('/knights/fakeId')
+        .get('/v1/knights/fakeId')
         .expect(404)
         .expect({
           statusCode: 404,
