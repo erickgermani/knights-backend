@@ -5,6 +5,7 @@ import KnightPrismaRepository from './database/prisma/repositories/knight-prisma
 import { CreateKnightUseCase } from '../application/usecases/create-knight.usecase';
 import KnightRepository from '../domain/repositories/knight.repository';
 import { GetKnightUseCase } from '../application/usecases/get-knight.usecase';
+import { ListKnightsUseCase } from '../application/usecases/list-knights.usecase';
 
 @Module({
   controllers: [KnightsController],
@@ -31,6 +32,13 @@ import { GetKnightUseCase } from '../application/usecases/get-knight.usecase';
       provide: GetKnightUseCase.UseCase,
       useFactory: (knightRepository: KnightRepository.Repository) => {
         return new GetKnightUseCase.UseCase(knightRepository);
+      },
+      inject: ['KnightRepository'],
+    },
+    {
+      provide: ListKnightsUseCase.UseCase,
+      useFactory: (knightRepository: KnightRepository.Repository) => {
+        return new ListKnightsUseCase.UseCase(knightRepository);
       },
       inject: ['KnightRepository'],
     },

@@ -66,11 +66,6 @@ describe('KnightModelMapper integration tests', () => {
     const sut = KnightModelMapper.toEntity(model);
 
     expect(sut).toBeInstanceOf(KnightEntity);
-    expect(sut.toJSON()).toMatchObject({
-      name: sut.name,
-      nickname: sut.nickname,
-      age: 0,
-      experience: 0,
-    });
+    expect(sut.toJSON()).toMatchObject(props);
   });
 });

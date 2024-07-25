@@ -24,7 +24,7 @@ describe('WrapperDataInterceptor', () => {
     });
 
     obs$.subscribe({
-      next: value => {
+      next: (value) => {
         expect(value).toEqual({ data: props });
       },
     });
@@ -38,7 +38,7 @@ describe('WrapperDataInterceptor', () => {
     });
 
     obs$.subscribe({
-      next: value => {
+      next: (value) => {
         expect(value).toEqual(result);
       },
     });

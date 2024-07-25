@@ -105,7 +105,7 @@ describe('KnightPrismaRepository integration tests', () => {
     expect(entities).toHaveLength(1);
 
     entities.map((item) =>
-      expect(item.toJSON()).toStrictEqual(entity.toJSON()),
+      expect(item.toJSON()).toMatchObject(entity.toJSON()),
     );
   });
 

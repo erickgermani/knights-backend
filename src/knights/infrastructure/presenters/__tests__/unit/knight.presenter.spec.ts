@@ -31,11 +31,7 @@ describe('KnightPresenter unit tests', () => {
       wisdom: 19,
     },
     keyAttribute: 'dexterity' as any,
-    age: 10,
-    attack: 15,
-    experience: 5000,
     createdAt: today,
-    updatedAt: today,
   };
 
   beforeEach(() => {
@@ -51,9 +47,6 @@ describe('KnightPresenter unit tests', () => {
       expect(sut.weapons).toEqual(props.weapons);
       expect(sut.attributes).toEqual(props.attributes);
       expect(sut.keyAttribute).toEqual(props.keyAttribute);
-      expect(sut.age).toEqual(props.age);
-      expect(sut.attack).toEqual(props.attack);
-      expect(sut.experience).toEqual(props.experience);
       expect(sut.createdAt).toEqual(props.createdAt);
     });
   });
@@ -83,11 +76,7 @@ describe('KnightPresenter unit tests', () => {
         wisdom: 19,
       },
       keyAttribute: 'dexterity',
-      age: 10,
-      attack: 15,
-      experience: 5000,
       createdAt: today.toISOString(),
-      updatedAt: today.toISOString(),
     });
   });
 });
@@ -117,11 +106,7 @@ describe('KnightCollectionPresenter unit tests', () => {
       wisdom: 19,
     },
     keyAttribute: 'dexterity' as any,
-    age: 10,
-    attack: 15,
-    experience: 5000,
     createdAt: today,
-    updatedAt: today,
   };
 
   describe('constructor', () => {
@@ -182,11 +167,7 @@ describe('KnightCollectionPresenter unit tests', () => {
             wisdom: 19,
           },
           keyAttribute: 'dexterity',
-          age: 10,
-          attack: 15,
-          experience: 5000,
           createdAt: today.toISOString(),
-          updatedAt: today.toISOString(),
         },
       ],
       meta: { currentPage: 1, perPage: 2, lastPage: 1, total: 1 },
@@ -226,11 +207,7 @@ describe('KnightCollectionPresenter unit tests', () => {
             wisdom: 19,
           },
           keyAttribute: 'dexterity',
-          age: 10,
-          attack: 15,
-          experience: 5000,
           createdAt: today.toISOString(),
-          updatedAt: today.toISOString(),
         },
       ],
       meta: { currentPage: 1, perPage: 2, lastPage: 1, total: 1 },

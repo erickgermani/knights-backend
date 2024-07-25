@@ -12,11 +12,9 @@ export type KnightOutput = {
   weapons: Weapon[];
   attributes: Attributes;
   keyAttribute: keyof Attributes;
-  age: number;
-  attack: number;
-  experience: number;
+  heroifiedAt?: Date;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 };
 
 export class KnightOutputMapper {

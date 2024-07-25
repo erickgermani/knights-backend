@@ -38,11 +38,7 @@ describe('KnightsController', () => {
         wisdom: 19,
       },
       keyAttribute: 'constitution',
-      age: 42,
-      attack: 43,
-      experience: 19700,
       createdAt: today,
-      updatedAt: today,
     };
   });
 

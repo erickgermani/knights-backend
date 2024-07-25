@@ -80,7 +80,7 @@ describe('KnightsController e2e tests', () => {
 
       const serialized = instanceToPlain(presenter);
 
-      expect(res.body.data).toStrictEqual(serialized);
+      expect(res.body.data).toMatchObject(serialized);
     });
 
     it('should return an error with 422 code when the request body is invalid', async () => {

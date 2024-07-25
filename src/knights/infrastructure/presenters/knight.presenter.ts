@@ -20,11 +20,10 @@ class KnightPresenter {
 
   keyAttribute: keyof Attributes;
 
-  age: number;
-
-  attack: number;
-
-  experience: number;
+  @Transform(({ value }: { value: Date }) =>
+    value ? value.toISOString() : value,
+  )
+  heroifiedAt?: Date;
 
   @Transform(({ value }: { value: Date }) => value.toISOString())
   createdAt: Date;
@@ -32,7 +31,7 @@ class KnightPresenter {
   @Transform(({ value }: { value: Date }) =>
     value ? value.toISOString() : value,
   )
-  updatedAt: Date;
+  updatedAt?: Date;
 
   constructor(output: KnightOutput) {
     this.id = output.id;
@@ -42,11 +41,12 @@ class KnightPresenter {
     this.weapons = output.weapons;
     this.attributes = output.attributes;
     this.keyAttribute = output.keyAttribute;
-    this.age = output.age;
-    this.attack = output.attack;
-    this.experience = output.experience;
+
+    if (output.heroifiedAt) this.heroifiedAt = output.heroifiedAt;
+
     this.createdAt = output.createdAt;
-    this.updatedAt = output.updatedAt;
+
+    if (output.updatedAt) this.updatedAt = output.updatedAt;
   }
 }
 

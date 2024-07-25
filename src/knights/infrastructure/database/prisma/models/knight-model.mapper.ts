@@ -15,6 +15,7 @@ class KnightModelMapper {
       weapons: model.weapons as Weapon[],
       attributes: model.attributes as Attributes,
       keyAttribute: model.keyAttribute,
+      heroifiedAt: model.heroifiedAt,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
     };

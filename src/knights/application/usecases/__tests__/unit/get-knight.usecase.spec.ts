@@ -38,9 +38,6 @@ describe('GetKnightUseCase unit tests', () => {
       weapons: items[0].weapons,
       attributes: items[0].attributes,
       keyAttribute: items[0].keyAttribute,
-      age: items[0].age,
-      attack: items[0].attack,
-      experience: items[0].experience,
       createdAt: items[0].createdAt,
     });
   });

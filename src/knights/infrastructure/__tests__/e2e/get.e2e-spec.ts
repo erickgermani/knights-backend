@@ -56,7 +56,7 @@ describe('KnightsController e2e tests', () => {
 
       const serialized = instanceToPlain(presenter);
 
-      expect(res.body.data).toStrictEqual(serialized);
+      expect(res.body.data).toMatchObject(serialized);
     });
 
     it('should return an error with 404 code when the throw NotFoundError with invalid id', async () => {

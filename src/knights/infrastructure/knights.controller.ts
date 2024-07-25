@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CreateKnightUseCase } from '../application/usecases/create-knight.usecase';
 import { KnightOutput } from '../application/dtos/knight-output';
 import KnightPresenter, {
@@ -7,6 +15,7 @@ import KnightPresenter, {
 import { ListKnightsUseCase } from '../application/usecases/list-knights.usecase';
 import { CreateDto } from './dtos/create.dto';
 import { GetKnightUseCase } from '../application/usecases/get-knight.usecase';
+import { ListKnightsDto } from './dtos/list-knights.dto';
 
 @Controller('knights')
 export class KnightsController {
@@ -16,12 +25,21 @@ export class KnightsController {
   @Inject(GetKnightUseCase.UseCase)
   private getKnightUseCase: GetKnightUseCase.UseCase;
 
+  @Inject(ListKnightsUseCase.UseCase)
+  private listKnightsUseCase: ListKnightsUseCase.UseCase;
+
   static knightToResponse(output: KnightOutput) {
     return new KnightPresenter(output);
   }
 
   static listKnightsToResponse(output: ListKnightsUseCase.Output) {
     return new KnightCollectionPresenter(output);
+  }
+
+  @Get()
+  async list(@Query() searchParams: ListKnightsDto) {
+    const output = await this.listKnightsUseCase.execute(searchParams);
+    return KnightsController.listKnightsToResponse(output);
   }
 
   @Post()

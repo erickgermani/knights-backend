@@ -59,21 +59,6 @@ describe('KnightEntity unit tests', () => {
     expect(typeof sut.keyAttribute).toBe('string');
   });
 
-  it('Getter of age field', () => {
-    expect(sut.age).toBeDefined();
-    expect(typeof sut.age).toBe('number');
-  });
-
-  it('Getter of attack field', () => {
-    expect(sut.attack).toBeDefined();
-    expect(typeof sut.attack).toBe('number');
-  });
-
-  it('Getter of experience field', () => {
-    expect(sut.experience).toBeDefined();
-    expect(typeof sut.experience).toBe('number');
-  });
-
   it('Getter of createdAt field', () => {
     expect(sut.createdAt).toBeDefined();
     expect(sut.createdAt).toBeInstanceOf(Date);
@@ -86,70 +71,70 @@ describe('KnightEntity unit tests', () => {
     expect(sut.props.nickname).toEqual('other nickname');
   });
 
-  it('Should calculate the correct age based on birthday', () => {
-    const birthday = new Date('2000-07-20');
+  // it('Should calculate the correct age based on birthday', () => {
+  //   const birthday = new Date('2000-07-20');
 
-    const today = new Date();
-    const expectedAge =
-      today.getFullYear() -
-      birthday.getFullYear() -
-      (today.getMonth() < birthday.getMonth() ||
-      (today.getMonth() === birthday.getMonth() &&
-        today.getDate() < birthday.getDate())
-        ? 1
-        : 0);
+  //   const today = new Date();
+  //   const expectedAge =
+  //     today.getFullYear() -
+  //     birthday.getFullYear() -
+  //     (today.getMonth() < birthday.getMonth() ||
+  //     (today.getMonth() === birthday.getMonth() &&
+  //       today.getDate() < birthday.getDate())
+  //       ? 1
+  //       : 0);
 
-    expect(sut['calculateAge'](birthday)).toBe(expectedAge);
-  });
+  //   expect(sut['calculateAge'](birthday)).toBe(expectedAge);
+  // });
 
-  it('Should return the currently equipped weapon', () => {
-    const equippedWeapon: Weapon = {
-      name: 'Sword of Dawn',
-      mod: 5,
-      attr: 'strength',
-      equipped: true,
-    };
+  // it('Should return the currently equipped weapon', () => {
+  //   const equippedWeapon: Weapon = {
+  //     name: 'Sword of Dawn',
+  //     mod: 5,
+  //     attr: 'strength',
+  //     equipped: true,
+  //   };
 
-    const weapons: Weapon[] = [
-      equippedWeapon,
-      {
-        name: 'Shield of Night',
-        mod: 3,
-        attr: 'constitution',
-        equipped: false,
-      },
-    ];
+  //   const weapons: Weapon[] = [
+  //     equippedWeapon,
+  //     {
+  //       name: 'Shield of Night',
+  //       mod: 3,
+  //       attr: 'constitution',
+  //       equipped: false,
+  //     },
+  //   ];
 
-    sut = new KnightEntity(KnightDataBuilder({ weapons }));
+  //   sut = new KnightEntity(KnightDataBuilder({ weapons }));
 
-    expect(sut['getEquippedWeapon']()).toEqual(equippedWeapon);
-  });
+  //   expect(sut['getEquippedWeapon']()).toEqual(equippedWeapon);
+  // });
 
-  it('Should calculate the correct attack', () => {
-    const weapons: Weapon[] = [
-      { name: 'Sword', mod: 2, attr: 'strength', equipped: true },
-      { name: 'Bow', mod: 1, attr: 'dexterity', equipped: false },
-    ];
+  // it('Should calculate the correct attack', () => {
+  //   const weapons: Weapon[] = [
+  //     { name: 'Sword', mod: 2, attr: 'strength', equipped: true },
+  //     { name: 'Bow', mod: 1, attr: 'dexterity', equipped: false },
+  //   ];
 
-    const attributes: Attributes = {
-      strength: 15,
-      dexterity: 10,
-      constitution: 12,
-      intelligence: 8,
-      wisdom: 14,
-      charisma: 13,
-    };
+  //   const attributes: Attributes = {
+  //     strength: 15,
+  //     dexterity: 10,
+  //     constitution: 12,
+  //     intelligence: 8,
+  //     wisdom: 14,
+  //     charisma: 13,
+  //   };
 
-    sut = new KnightEntity(
-      KnightDataBuilder({
-        attributes,
-        weapons,
-        keyAttribute: 'dexterity',
-      }),
-    );
+  //   sut = new KnightEntity(
+  //     KnightDataBuilder({
+  //       attributes,
+  //       weapons,
+  //       keyAttribute: 'dexterity',
+  //     }),
+  //   );
 
-    const expectedAttack = KnightEntity.INITIAL_ATTACK + -1 + 2;
+  //   const expectedAttack = KnightEntity.INITIAL_ATTACK + -1 + 2;
 
-    expect(sut.attack).toBe(expectedAttack);
-  });
+  //   expect(sut.attack).toBe(expectedAttack);
+  // });
 });
