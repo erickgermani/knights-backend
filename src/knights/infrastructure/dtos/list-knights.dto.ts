@@ -27,4 +27,10 @@ export class ListKnightsDto implements ListKnightsUseCase.Input {
   @ApiPropertyOptional({ description: 'Defined filter to search data' })
   @IsOptional()
   filterBy?: string;
+
+  @ApiPropertyOptional({
+    description: 'Defined filter to search heroified knights',
+  })
+  @IsOptional()
+  filter?: string;
 }
