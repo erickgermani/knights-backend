@@ -4,96 +4,52 @@ import { Attributes } from '@/knights/domain/entities/knight.entity';
 import {
   ArrayNotEmpty,
   IsArray,
-  IsBoolean,
   IsDate,
   IsNotEmpty,
   IsNotEmptyObject,
-  IsNumber,
   IsObject,
   IsOptional,
   IsString,
-  Max,
   MaxLength,
-  Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-
-class AttributesDto {
-  @IsNumber()
-  @Min(0)
-  @Max(20)
-  strength: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(20)
-  dexterity: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(20)
-  constitution: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(20)
-  intelligence: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(20)
-  wisdom: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(20)
-  charisma: number;
-}
-
-class WeaponDto {
-  @MaxLength(255)
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  @IsNumber()
-  mod: number;
-
-  @MaxLength(12)
-  @IsString()
-  @IsNotEmpty()
-  attr: keyof Attributes;
-
-  @IsBoolean()
-  equipped: boolean;
-}
+import { ApiProperty } from '@nestjs/swagger';
+import { WeaponDto } from './weapon.dto';
+import { AttributesDto } from './attributes.dto';
 
 export class CreateDto implements CreateKnightUseCase.Input {
+  @ApiProperty({ description: 'Knight name' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty({ description: 'Knight nickname' })
   @IsString()
   @IsNotEmpty()
   nickname: string;
 
+  @ApiProperty({ description: 'Knight birthday' })
   @IsDate()
   @Type(() => Date)
   birthday: Date;
 
+  @ApiProperty({ description: 'Knight weapons', type: [WeaponDto] })
   @IsArray()
   @ArrayNotEmpty()
   weapons: WeaponDto[];
 
+  @ApiProperty({ description: 'Knight attributes' })
   @IsObject()
   @IsNotEmptyObject()
   attributes: AttributesDto;
 
+  @ApiProperty({ description: 'Knight key attribute' })
   @MaxLength(12)
   @IsString()
   @IsNotEmpty()
   keyAttribute: keyof Attributes;
 
+  @ApiProperty({ description: 'Knight creation date' })
   @IsDate()
   @Type(() => Date)
   @IsOptional()

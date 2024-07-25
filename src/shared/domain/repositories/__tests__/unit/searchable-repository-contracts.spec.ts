@@ -112,7 +112,7 @@ describe('Searchable Repository unit tests', () => {
       });
     });
 
-    it('filter prop', () => {
+    it('filterBy prop', () => {
       const sut = new SearchParams();
 
       expect(sut.filterBy).toBeNull();

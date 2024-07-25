@@ -22,7 +22,9 @@ import { ListKnightsDto } from './dtos/list-knights.dto';
 import { UpdateKnightDto } from './dtos/update-knight.dto';
 import UpdateKnightUseCase from '../application/usecases/update-knight.usecase';
 import { HeroifyKnightUseCase } from '../application/usecases/heroify-knight.usecase';
+import { ApiResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
 
+@ApiTags('knights')
 @Controller('knights')
 export class KnightsController {
   @Inject(CreateKnightUseCase.UseCase)
@@ -48,24 +50,79 @@ export class KnightsController {
     return new KnightCollectionPresenter(output);
   }
 
+  @ApiResponse({
+    status: 200,
+    schema: {
+      type: 'object',
+      properties: {
+        meta: {
+          type: 'object',
+          properties: {
+            total: { type: 'number' },
+            currentPage: { type: 'number' },
+            lastPage: { type: 'number' },
+            perPage: { type: 'number' },
+          },
+        },
+        data: {
+          type: 'array',
+          items: { $ref: getSchemaPath(KnightPresenter) },
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 422,
+    description: 'Invalid query params',
+  })
   @Get()
   async list(@Query() searchParams: ListKnightsDto) {
     const output = await this.listKnightsUseCase.execute(searchParams);
     return KnightsController.listKnightsToResponse(output);
   }
 
+  @ApiResponse({
+    status: 409,
+    description: 'Nickname conflict',
+  })
+  @ApiResponse({
+    status: 422,
+    description: 'Body request with invalid data',
+  })
   @Post()
   async create(@Body() createDto: CreateDto) {
     const output = await this.createKnightUseCase.execute(createDto);
     return KnightsController.knightToResponse(output);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Knight found',
+    schema: {
+      type: 'object',
+      properties: {
+        data: { $ref: getSchemaPath(KnightPresenter) },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Id not found',
+  })
   @Get(':id')
   async get(@Param('id') id: string) {
     const output = await this.getKnightUseCase.execute({ id });
     return KnightsController.knightToResponse(output);
   }
 
+  @ApiResponse({
+    status: 422,
+    description: 'Body request with invalid data',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Id not found',
+  })
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -78,6 +135,14 @@ export class KnightsController {
     return KnightsController.knightToResponse(output);
   }
 
+  @ApiResponse({
+    status: 204,
+    description: 'Deletion confirmation response',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Id not found',
+  })
   @HttpCode(204)
   @Delete(':id')
   async heroify(@Param('id') id: string) {

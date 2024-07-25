@@ -3,31 +3,42 @@ import { KnightOutput } from '@/knights/application/dtos/knight-output';
 import { ListKnightsUseCase } from '@/knights/application/usecases/list-knights.usecase';
 import { Attributes, Weapon } from '@/knights/domain/entities/knight.entity';
 import { Transform } from 'class-transformer';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 class KnightPresenter {
+  @ApiProperty({ description: 'Knight id' })
   id: string;
 
+  @ApiProperty({ description: 'Knight name' })
   name: string;
 
+  @ApiProperty({ description: 'Knight nickname' })
   nickname: string;
 
+  @ApiProperty({ description: 'Knight birthday' })
   @Transform(({ value }: { value: Date }) => value.toISOString())
   birthday: Date;
 
+  @ApiProperty({ description: 'Knight weapons' })
   weapons: Weapon[];
 
+  @ApiProperty({ description: 'Knight attributes' })
   attributes: Attributes;
 
+  @ApiProperty({ description: 'Knight key attribute' })
   keyAttribute: keyof Attributes;
 
+  @ApiPropertyOptional({ description: 'Date the knight was heroized ' })
   @Transform(({ value }: { value: Date }) =>
     value ? value.toISOString() : value,
   )
   heroifiedAt?: Date;
 
+  @ApiProperty({ description: 'Knight creation date' })
   @Transform(({ value }: { value: Date }) => value.toISOString())
   createdAt: Date;
 
+  @ApiPropertyOptional({ description: 'Knight update date' })
   @Transform(({ value }: { value: Date }) =>
     value ? value.toISOString() : value,
   )
