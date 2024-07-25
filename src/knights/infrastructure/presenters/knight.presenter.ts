@@ -41,11 +41,9 @@ class KnightPresenter {
     this.weapons = output.weapons;
     this.attributes = output.attributes;
     this.keyAttribute = output.keyAttribute;
-
-    if (output.heroifiedAt) this.heroifiedAt = output.heroifiedAt;
-
     this.createdAt = output.createdAt;
 
+    if (output.heroifiedAt) this.heroifiedAt = output.heroifiedAt;
     if (output.updatedAt) this.updatedAt = output.updatedAt;
   }
 }

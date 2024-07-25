@@ -2,13 +2,14 @@ import { ValidationError } from '@/shared/domain/errors/validation-error';
 import {
   Attributes,
   KnightEntity,
+  KnightProps,
   Weapon,
 } from '@/knights/domain/entities/knight.entity';
 import { Knight } from '@prisma/client';
 
 class KnightModelMapper {
   static toEntity(model: Knight) {
-    const data = {
+    const data: KnightProps = {
       name: model.name,
       nickname: model.nickname,
       birthday: model.birthday,
@@ -19,6 +20,9 @@ class KnightModelMapper {
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
     };
+
+    if (model.heroifiedAt) data.heroifiedAt = model.heroifiedAt;
+    if (model.updatedAt) data.updatedAt = model.updatedAt;
 
     try {
       return new KnightEntity(data, model.id);

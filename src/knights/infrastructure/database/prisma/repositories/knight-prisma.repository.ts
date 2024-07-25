@@ -20,6 +20,21 @@ class KnightPrismaRepository implements KnightRepository.Repository {
     if (knight) throw new ConflictError('Nickname already used');
   }
 
+  async heroify(id: string): Promise<KnightEntity> {
+    await this._get(id);
+
+    const model = await this.prismaService.knight.update({
+      where: {
+        id,
+      },
+      data: {
+        heroifiedAt: new Date(),
+      },
+    });
+
+    return KnightModelMapper.toEntity(model);
+  }
+
   async search(
     props: KnightRepository.SearchParams,
   ): Promise<KnightRepository.SearchResult> {
@@ -73,7 +88,7 @@ class KnightPrismaRepository implements KnightRepository.Repository {
         nickname: entity.nickname,
         weapons: entity.weapons,
         attributes: entity.attributes,
-        birthday: entity.birthday.toISOString(),
+        birthday: entity.birthday,
         keyAttribute: entity.keyAttribute,
         createdAt: entity.createdAt,
       },
@@ -101,20 +116,14 @@ class KnightPrismaRepository implements KnightRepository.Repository {
         nickname: entity.nickname,
         weapons: entity.weapons,
         attributes: entity.attributes,
-        birthday: entity.birthday.toISOString(),
+        birthday: entity.birthday,
         keyAttribute: entity.keyAttribute,
       },
     });
   }
 
-  // TODO refatorar este delete
   async delete(id: string): Promise<void> {
-    await this._get(id);
-    await this.prismaService.knight.delete({
-      where: {
-        id,
-      },
-    });
+    throw new Error('Method not implemented');
   }
 
   protected async _get(id: string): Promise<KnightEntity> {

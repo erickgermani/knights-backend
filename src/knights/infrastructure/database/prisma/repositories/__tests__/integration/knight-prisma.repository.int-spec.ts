@@ -94,7 +94,7 @@ describe('KnightPrismaRepository integration tests', () => {
         nickname: entity.nickname,
         weapons: entity.weapons,
         attributes: entity.attributes,
-        birthday: entity.birthday.toISOString(),
+        birthday: entity.birthday,
         keyAttribute: entity.keyAttribute,
         createdAt: entity.createdAt,
       },
@@ -213,7 +213,7 @@ describe('KnightPrismaRepository integration tests', () => {
     );
   });
 
-  it('Should update a entity', async () => {
+  it('Should update a entity nickname', async () => {
     const entity = new KnightEntity(KnightDataBuilder());
     await prismaService.knight.create({
       data: {
@@ -222,7 +222,7 @@ describe('KnightPrismaRepository integration tests', () => {
         nickname: entity.nickname,
         weapons: entity.weapons,
         attributes: entity.attributes,
-        birthday: entity.birthday.toISOString(),
+        birthday: entity.birthday,
         keyAttribute: entity.keyAttribute,
         createdAt: entity.createdAt,
       },
@@ -243,36 +243,62 @@ describe('KnightPrismaRepository integration tests', () => {
     expect(output.nickname).toBe('new nickname');
   });
 
-  it('Should throws error on delete when entity not found', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
-
-    await expect(() => sut.delete(entity._id)).rejects.toThrow(
-      new NotFoundError(`KnightModel not found using ID ${entity._id}`),
+  it('Should throws error when try delete an entity', async () => {
+    await expect(() => sut.delete('FakeId')).rejects.toThrow(
+      new Error('Method not implemented'),
     );
-  });
-
-  // TODO refatorar esse teste
-  it.skip('Should delete an entity', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
-    await prismaService.knight.create({
-      data: entity.toJSON(),
-    });
-
-    await sut.delete(entity._id);
-
-    const output = await prismaService.knight.findUnique({
-      where: {
-        id: entity._id,
-      },
-    });
-
-    expect(output).toBeNull();
   });
 
   it('Should throws error when entity found by nickname', async () => {
     const entity = new KnightEntity(
       KnightDataBuilder({ nickname: 'test nickname' }),
     );
+    await prismaService.knight.create({
+      data: {
+        id: entity.id,
+        name: entity.name,
+        nickname: entity.nickname,
+        weapons: entity.weapons,
+        attributes: entity.attributes,
+        birthday: entity.birthday,
+        keyAttribute: entity.keyAttribute,
+        createdAt: entity.createdAt,
+      },
+    });
+
+    await expect(() => sut.nicknameExists('test nickname')).rejects.toThrow(
+      new ConflictError(`Nickname already used`),
+    );
+  });
+
+  it('Should heroify a knight', async () => {
+    const entity = new KnightEntity(KnightDataBuilder());
+
+    await prismaService.knight.create({
+      data: {
+        id: entity.id,
+        name: entity.name,
+        nickname: entity.nickname,
+        weapons: entity.weapons,
+        attributes: entity.attributes,
+        birthday: entity.birthday,
+        keyAttribute: entity.keyAttribute,
+        createdAt: entity.createdAt,
+      },
+    });
+
+    const result = await sut.heroify(entity.id);
+
+    expect(result.toJSON()).toStrictEqual(
+      Object.assign(entity.toJSON(), { heroifiedAt: result.heroifiedAt }),
+    );
+  });
+
+  it('Should throws error when entity found by nickname', async () => {
+    const entity = new KnightEntity(
+      KnightDataBuilder({ nickname: 'test nickname' }),
+    );
+
     await prismaService.knight.create({
       data: {
         id: entity.id,
