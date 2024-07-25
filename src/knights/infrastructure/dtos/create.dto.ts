@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { CreateKnightUseCase } from '@/knights/application/usecases/create-knight.usecase';
 import { Attributes } from '@/knights/domain/entities/knight.entity';
 import {
@@ -43,7 +42,7 @@ export class CreateDto implements CreateKnightUseCase.Input {
   @IsNotEmptyObject()
   attributes: AttributesDto;
 
-  @ApiProperty({ description: 'Knight key attribute' })
+  @ApiProperty({ description: 'Knight key attribute', type: String })
   @MaxLength(12)
   @IsString()
   @IsNotEmpty()

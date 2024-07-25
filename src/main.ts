@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { applyGlobalConfig } from './global-config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import KnightPresenter from './knights/infrastructure/presenters/knight.presenter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -19,7 +20,9 @@ async function bootstrap() {
     .setVersion('0.0.1')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    extraModels: [KnightPresenter],
+  });
 
   SwaggerModule.setup('api', app, document);
 

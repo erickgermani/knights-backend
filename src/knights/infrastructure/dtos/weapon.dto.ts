@@ -19,7 +19,7 @@ export class WeaponDto {
   @IsNumber()
   mod: number;
 
-  @ApiProperty({ description: 'Weapon attr' })
+  @ApiProperty({ description: 'Weapon attr', type: String })
   @MaxLength(12)
   @IsString()
   @IsNotEmpty()

@@ -5,6 +5,40 @@ import { Attributes, Weapon } from '@/knights/domain/entities/knight.entity';
 import { Transform } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
+class SolidWeapon implements Weapon {
+  @ApiProperty({ description: 'Weapon name' })
+  name: string;
+
+  @ApiProperty({ description: 'Weapon mod' })
+  mod: number;
+
+  @ApiProperty({ description: 'Weapon attr', type: String })
+  attr: keyof Attributes;
+
+  @ApiProperty({ description: 'Weapon equipped' })
+  equipped: boolean;
+}
+
+class SolidAttributes implements Attributes {
+  @ApiProperty({ description: 'Knight strength' })
+  strength: number;
+
+  @ApiProperty({ description: 'Knight dexterity' })
+  dexterity: number;
+
+  @ApiProperty({ description: 'Knight constitution' })
+  constitution: number;
+
+  @ApiProperty({ description: 'Knight intelligence' })
+  intelligence: number;
+
+  @ApiProperty({ description: 'Knight wisdom' })
+  wisdom: number;
+
+  @ApiProperty({ description: 'Knight charisma' })
+  charisma: number;
+}
+
 class KnightPresenter {
   @ApiProperty({ description: 'Knight id' })
   id: string;
@@ -19,13 +53,13 @@ class KnightPresenter {
   @Transform(({ value }: { value: Date }) => value.toISOString())
   birthday: Date;
 
-  @ApiProperty({ description: 'Knight weapons' })
-  weapons: Weapon[];
+  @ApiProperty({ description: 'Knight weapons', type: [SolidWeapon] })
+  weapons: SolidWeapon[];
 
   @ApiProperty({ description: 'Knight attributes' })
-  attributes: Attributes;
+  attributes: SolidAttributes;
 
-  @ApiProperty({ description: 'Knight key attribute' })
+  @ApiProperty({ description: 'Knight key attribute', type: String })
   keyAttribute: keyof Attributes;
 
   @ApiPropertyOptional({ description: 'Date the knight was heroized ' })

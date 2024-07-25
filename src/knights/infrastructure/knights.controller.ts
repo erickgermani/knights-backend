@@ -116,6 +116,16 @@ export class KnightsController {
   }
 
   @ApiResponse({
+    status: 200,
+    description: 'Knight updated',
+    schema: {
+      type: 'object',
+      properties: {
+        data: { $ref: getSchemaPath(KnightPresenter) },
+      },
+    },
+  })
+  @ApiResponse({
     status: 422,
     description: 'Body request with invalid data',
   })
