@@ -23,8 +23,8 @@
     "test:watch": "npx dotenv-cli -e .env.test -- jest --watch",
     "test:cov": "npx dotenv-cli -e .env.test -- jest --runInBand --coverage",
     "test:debug": "npx dotenv-cli -e .env.test -- node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "db:generate": "npx dotenv-cli -e .env.test -- npx prisma generate",
-    "db:push": "npx dotenv-cli -e .env.test -- npx prisma db push"
+    "db:generate": "npx dotenv-cli -e .env.development -- npx prisma generate",
+    "db:push": "npx dotenv-cli -e .env.development -- npx prisma db push"
   },
   "prisma": {
     "schema": "src/shared/infrastructure/database/prisma/schema.prisma"
