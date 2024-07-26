@@ -9,6 +9,12 @@ import { ConflictErrorFilter } from './shared/infrastructure/exception-filters/c
 import { NotFoundErrorFilter } from './shared/infrastructure/exception-filters/not-found-error/not-found-error.filter';
 
 export function applyGlobalConfig(app: INestApplication) {
+  app.enableCors({
+    origin: 'http://localhost:8080',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   app.useGlobalPipes(
     new ValidationPipe({
       errorHttpStatusCode: 422,
