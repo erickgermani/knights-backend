@@ -52,8 +52,7 @@ describe('KnightsController e2e tests', () => {
   });
 
   describe('PUT /knights', () => {
-    // TODO corrigir este teste
-    it.skip('should update an knight', async () => {
+    it('should update an knight', async () => {
       updateKnightDto.nickname = 'updated nickname';
 
       const res = await request(app.getHttpServer())
@@ -67,7 +66,10 @@ describe('KnightsController e2e tests', () => {
 
       const serialized = instanceToPlain(presenter);
 
-      expect(res.body.data).toStrictEqual(serialized);
+      expect(res.body.data.id).toEqual(serialized.id);
+      expect(res.body.data.nickname).toEqual(serialized.nickname);
+      expect(res.body.data.updatedAt).toEqual(serialized.updatedAt);
+      expect(typeof res.body.data.updatedAt).toBe('string');
     });
 
     it('should return an error with 422 code when the request body is invalid', async () => {

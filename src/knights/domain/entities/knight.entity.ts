@@ -105,10 +105,14 @@ export class KnightEntity extends Entity<KnightProps> {
     KnightEntity.validate({ ...this.props, nickname: value });
 
     this.nickname = value;
+    this.updatedAt = new Date();
   }
 
   heroify() {
-    this.heroifiedAt = new Date();
+    const now = new Date();
+
+    this.heroifiedAt = now;
+    this.updatedAt = now;
   }
 
   // private calculateAge(birthday: Date) {

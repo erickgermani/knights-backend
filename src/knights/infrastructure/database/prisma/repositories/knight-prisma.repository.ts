@@ -86,7 +86,6 @@ class KnightPrismaRepository implements KnightRepository.Repository {
 
     const updatedEntity = {
       ...entity.toJSON(),
-      updatedAt: new Date(),
     };
 
     delete updatedEntity.id;
