@@ -88,23 +88,12 @@ export class KnightRules {
   @ArrayNotEmpty()
   @ArrayNotEmpty()
   @Type(() => WeaponRules)
-  // @Transform(({value}: {value: Weapon}) => )
   @ValidateNested({ each: true })
   weapons: WeaponRules[];
 
   @IsObject()
   @IsNotEmptyObject()
   @Type(() => AttributesRules)
-  // @Transform(({ value }: { value: Attributes }) => {
-  //   const attributesRules = new AttributesRules();
-  //   attributesRules.charisma = value.charisma;
-  //   attributesRules.constitution = value.constitution;
-  //   attributesRules.dexterity = value.dexterity;
-  //   attributesRules.intelligence = value.intelligence;
-  //   attributesRules.strength = value.strength;
-  //   attributesRules.wisdom = value.wisdom;
-  //   return attributesRules;
-  // })
   @ValidateNested()
   attributes: AttributesRules;
 
@@ -148,14 +137,6 @@ export class KnightRules {
 
 export class KnightValidator extends ClassValidatorFields<KnightRules> {
   validate(data: KnightProps): boolean {
-    // console.log(
-    //   'new KnightRules(data ?? ({} as KnightProps)) :>> ',
-    //   new KnightRules(data ?? ({} as KnightProps)),
-    // );
-    // console.log(
-    //   'super.validate(new KnightRules(data ?? ({} as KnightProps))) :>> ',
-    //   super.validate(new KnightRules(data ?? ({} as KnightProps))),
-    // );
     return super.validate(new KnightRules(data ?? ({} as KnightProps)));
   }
 }
