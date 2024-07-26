@@ -1,105 +1,48 @@
-# Knights Challenge
+## Descrição
 
-O desafio Knights visa a construção um sistema cadastro de heróis utilizando as
-seguintes tecnologias:
+Repositório contendo o código fonte da API do [Knights Challenge](./challenge.md). Construído com o NestJS framework + Fastify, utiliza o MongoDB como SGDB através do Prisma.io.
 
-- Vue.js
-- NodeJS (Express.js | NestJS)
-- MongoDB | Redis
+# Requisitos
 
-## Requisitos
+- Node.js
+- Docker
 
-#### [GET] /knights
+## Instalação
 
-Exibe a lista com todos os knights.
-
-#### [GET] /knights?filter=heroes
-
-Exibe uma lista contendo apenas os guerreiros que se tornaram heróis.
-
-#### [POST] /knights
-
-Cria um knight.
-
-#### [GET] /knights/:id
-
-Mostra informações de um knight.
-
-#### [DELETE] /knights/:id
-
-Remove um guerreiro. Esse guerreiro deve entrar no Hall of Heroes.
-
-#### [UPDATE] /knights/:id
-
-Permite alterar o apelido.
-
-## Regras
-
-##### Lista de Knights
-
-A lista deve ter:
-
-- Nome: Nome do knight
-- Idade: Anos corridos desde o nascimento
-- Armas: Quantidade de armas
-- Atributo: Atributo chave do knight
-- Ataque: Poder de ataque (Como calcular)
-- Exp: Experiência (Como calcular)
-
-## Knight
-
-O Knight deve seguir o esquema abaixo:
-
-```json
-{
-  "name": "",
-  "nickname": "",
-  "birthday": "",
-  "weapons": [
-    {
-      "name": "sword",
-      "mod": 3,
-      "attr": " strength",
-      "equipped": true
-    }
-  ],
-  "attributes": {
-    "strength": 0,
-    "dexterity": 0,
-    "constitution": 0,
-    "intelligence": 0,
-    "wisdom": 0,
-    "charisma": 0
-  },
-  "keyAttribute": "strength"
-}
+```bash
+$ npm install
 ```
 
-## Ataque
+## Iniciando o banco de dados
 
-O ataque de um knight é dado por:
-
+```bash
+$ npm run db:generate
+$ docker-compose up -d
+$ npm run db:push
 ```
-attack = 10 + mod(keyAttr) + equippedWeapon.mod
+
+## Rodando a API
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
 ```
 
-Os valores dos atributos devem ser ajustados seguindo a tabela abaixo.
+## Test
 
-| Valor | Mod |
-| ----- | --- |
-| 0-8   | -2  |
-| 9-10  | -1  |
-| 11-12 | 0   |
-| 13-15 | +1  |
-| 16-18 | +2  |
-| 19-20 | +3  |
+```bash
+# unit tests
+$ npm run test
 
-## Experiência
+# e2e tests
+$ npm run test:e2e
 
-Um knight só começa seu treinamento a partir dos 7 anos de idade. Antes disso, sua experiência de combate é 0.
-
-A experiência é dada por:
-
-```
-exp = Math.floor((age - 7) \* Math.pow(22, 1.45))
+# test coverage
+$ npm run test:cov
 ```
