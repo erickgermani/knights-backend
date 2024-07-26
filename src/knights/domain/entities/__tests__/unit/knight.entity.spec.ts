@@ -1,9 +1,4 @@
-import {
-  Attributes,
-  KnightEntity,
-  KnightProps,
-  Weapon,
-} from '../../knight.entity';
+import { KnightEntity, KnightProps } from '../../knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 
 describe('KnightEntity unit tests', () => {

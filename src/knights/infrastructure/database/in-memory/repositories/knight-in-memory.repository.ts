@@ -1,5 +1,4 @@
 import { InMemorySearchableRepository } from '@/shared/domain/repositories/in-memory-searchable.repository';
-import { SortDirection } from '@/shared/domain/repositories/searchable-repository-contracts';
 import { KnightEntity } from '@/knights/domain/entities/knight.entity';
 import KnightRepository from '@/knights/domain/repositories/knight.repository';
 import { ConflictError } from '@/shared/domain/errors/conflict-error';

@@ -7,7 +7,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { WeaponDto } from '../dtos/weapon.dto';
 import { AttributesDto } from '../dtos/attributes.dto';
 
-class KnightPresenter {
+export class KnightPresenter {
   @ApiProperty({ description: 'Knight id' })
   id: string;
 
@@ -72,4 +72,3 @@ class KnightCollectionPresenter extends ColletionPresenter {
 }
 
 export { KnightCollectionPresenter };
-export default KnightPresenter;

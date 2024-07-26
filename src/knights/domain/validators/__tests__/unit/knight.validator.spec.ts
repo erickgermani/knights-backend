@@ -110,6 +110,7 @@ describe('KnightValidator unit tests', () => {
       expect(sut.errors['weapons']).toStrictEqual([
         'weapons should not be empty',
         'weapons must be an array',
+        'each value in nested property weapons must be either object or array',
       ]);
 
       isValid = sut.validate({ ...props, weapons: [] });
@@ -159,6 +160,7 @@ describe('KnightValidator unit tests', () => {
       expect(sut.errors['attributes']).toStrictEqual([
         'attributes must be a non-empty object',
         'attributes must be an object',
+        'nested property attributes must be either object or array',
       ]);
 
       isValid = sut.validate({ ...props, attributes: {} as any });

@@ -1,8 +1,10 @@
+import 'reflect-metadata';
 import {
   ArrayNotEmpty,
   IsArray,
   IsBoolean,
   IsDate,
+  IsIn,
   IsNotEmpty,
   IsNotEmptyObject,
   IsNumber,
@@ -12,9 +14,11 @@ import {
   Max,
   MaxLength,
   Min,
+  ValidateNested,
 } from 'class-validator';
 import { KnightProps } from '../entities/knight.entity';
 import { ClassValidatorFields } from '@/shared/domain/validators/class-validator-fields';
+import { Type } from 'class-transformer';
 
 class AttributesRules {
   @IsNumber()
@@ -82,15 +86,39 @@ export class KnightRules {
 
   @IsArray()
   @ArrayNotEmpty()
+  @ArrayNotEmpty()
+  @Type(() => WeaponRules)
+  // @Transform(({value}: {value: Weapon}) => )
+  @ValidateNested({ each: true })
   weapons: WeaponRules[];
 
   @IsObject()
   @IsNotEmptyObject()
+  @Type(() => AttributesRules)
+  // @Transform(({ value }: { value: Attributes }) => {
+  //   const attributesRules = new AttributesRules();
+  //   attributesRules.charisma = value.charisma;
+  //   attributesRules.constitution = value.constitution;
+  //   attributesRules.dexterity = value.dexterity;
+  //   attributesRules.intelligence = value.intelligence;
+  //   attributesRules.strength = value.strength;
+  //   attributesRules.wisdom = value.wisdom;
+  //   return attributesRules;
+  // })
+  @ValidateNested()
   attributes: AttributesRules;
 
   @MaxLength(12)
   @IsString()
   @IsNotEmpty()
+  @IsIn([
+    'charisma',
+    'constitution',
+    'dexterity',
+    'intelligence',
+    'strength',
+    'wisdom',
+  ])
   keyAttribute: string;
 
   @IsDate()
@@ -120,6 +148,14 @@ export class KnightRules {
 
 export class KnightValidator extends ClassValidatorFields<KnightRules> {
   validate(data: KnightProps): boolean {
+    // console.log(
+    //   'new KnightRules(data ?? ({} as KnightProps)) :>> ',
+    //   new KnightRules(data ?? ({} as KnightProps)),
+    // );
+    // console.log(
+    //   'super.validate(new KnightRules(data ?? ({} as KnightProps))) :>> ',
+    //   super.validate(new KnightRules(data ?? ({} as KnightProps))),
+    // );
     return super.validate(new KnightRules(data ?? ({} as KnightProps)));
   }
 }

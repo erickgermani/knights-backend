@@ -1,5 +1,6 @@
 import { instanceToPlain } from 'class-transformer';
-import KnightPresenter, {
+import {
+  KnightPresenter,
   KnightCollectionPresenter,
 } from '../../knight.presenter';
 import PaginationPresenter from '@/shared/infrastructure/presenters/pagination.presenter';

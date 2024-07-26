@@ -100,6 +100,7 @@ describe('KnightsController e2e tests', () => {
         'weapons must be an array',
         'attributes must be a non-empty object',
         'attributes must be an object',
+        'keyAttribute must be one of the following values: charisma, constitution, dexterity, intelligence, strength, wisdom',
         'keyAttribute should not be empty',
         'keyAttribute must be a string',
         'keyAttribute must be shorter than or equal to 12 characters',

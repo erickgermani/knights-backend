@@ -6,7 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { applyGlobalConfig } from './global-config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import KnightPresenter from './knights/infrastructure/presenters/knight.presenter';
+import { KnightPresenter } from './knights/infrastructure/presenters/knight.presenter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(

@@ -12,7 +12,8 @@ import {
 } from '@nestjs/common';
 import { CreateKnightUseCase } from '../application/usecases/create-knight.usecase';
 import { KnightOutput } from '../application/dtos/knight-output';
-import KnightPresenter, {
+import {
+  KnightPresenter,
   KnightCollectionPresenter,
 } from './presenters/knight.presenter';
 import { ListKnightsUseCase } from '../application/usecases/list-knights.usecase';

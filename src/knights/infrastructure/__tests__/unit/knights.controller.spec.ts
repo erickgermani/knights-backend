@@ -2,7 +2,7 @@ import { KnightOutput } from '@/knights/application/dtos/knight-output';
 import { KnightsController } from '../../knights.controller';
 import { CreateKnightUseCase } from '@/knights/application/usecases/create-knight.usecase';
 import { CreateDto } from '../../dtos/create.dto';
-import KnightPresenter from '../../presenters/knight.presenter';
+import { KnightPresenter } from '../../presenters/knight.presenter';
 import { GetKnightUseCase } from '@/knights/application/usecases/get-knight.usecase';
 import UpdateKnightUseCase from '@/knights/application/usecases/update-knight.usecase';
 import { UpdateKnightDto } from '../../dtos/update-knight.dto';
