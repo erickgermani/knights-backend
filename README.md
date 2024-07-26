@@ -1,6 +1,6 @@
 # knights-backend
 
-Repositório contendo o código fonte da API do [Knights Challenge](./Challenge.md). Construído com o NestJS framework + Fastify, utiliza o MongoDB como SGDB através do Prisma.io. Para visualizar o código fonte do front-end, [clique aqui](https://github.com/erickgermani/knights-frontend).
+Repositório contendo o código fonte do back-end do [Knights Challenge](./Challenge.md). Construído com o NestJS framework + Fastify, utiliza o MongoDB como SGDB através do Prisma.io. Para visualizar o código fonte do front-end, [clique aqui](https://github.com/erickgermani/knights-frontend).
 
 ## Requisitos
 
@@ -14,7 +14,7 @@ $ npm install
 $ npm run db:generate
 ```
 
-## Rodando a API
+## Rodando o back-end
 
 ```bash
 # development
