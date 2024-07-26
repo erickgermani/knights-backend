@@ -14,7 +14,7 @@ export type SearchProps<Filter = string> = {
 export class SearchParams<Filter = string> {
   protected _page: number;
   protected _perPage: number = 15;
-  protected _sort: null | string;
+  protected _sort: string | null;
   protected _sortDir: SortDirection | null;
   protected _filterBy: Filter | null;
 

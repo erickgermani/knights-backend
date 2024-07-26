@@ -22,6 +22,7 @@ describe('ListKnightsUseCase unit tests', () => {
       sort: null,
       sortDir: null,
       filterBy: null,
+      filter: null,
     });
 
     let output = sut['toOutput'](result);
@@ -44,6 +45,7 @@ describe('ListKnightsUseCase unit tests', () => {
       sort: null,
       sortDir: null,
       filterBy: null,
+      filter: null,
     });
 
     output = sut['toOutput'](result);
@@ -72,7 +74,7 @@ describe('ListKnightsUseCase unit tests', () => {
     const output = await sut.execute({});
 
     expect(output).toStrictEqual({
-      items: [...items.reverse()].map((item) => item.toJSON()),
+      items: items.map((item) => item.toJSON()),
       total: 2,
       currentPage: 1,
       lastPage: 1,

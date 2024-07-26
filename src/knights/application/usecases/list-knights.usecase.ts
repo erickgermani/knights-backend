@@ -8,7 +8,7 @@ import {
 import { SearchInput } from '@/shared/application/dtos/search-input';
 
 export namespace ListKnightsUseCase {
-  export type Input = SearchInput;
+  export type Input = SearchInput & { filter?: string };
 
   export type Output = PaginationOutput<KnightOutput>;
 

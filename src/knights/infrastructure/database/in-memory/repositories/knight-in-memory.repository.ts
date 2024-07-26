@@ -18,6 +18,44 @@ export default class KnightInMemoryRepository
     if (entity) throw new ConflictError('Nickname already used');
   }
 
+  async search(
+    props: KnightRepository.SearchParams,
+  ): Promise<KnightRepository.SearchResult> {
+    const items = await this.findAll();
+
+    const heroifiedItems = props.filter
+      ? items.filter((item) => item.heroifiedAt)
+      : items;
+
+    const itemsFiltered = await this.applyFilter(
+      heroifiedItems,
+      props.filterBy,
+    );
+
+    const itemsSorted = await this.applySort(
+      itemsFiltered,
+      props.sort,
+      props.sortDir,
+    );
+
+    const itemsPaginated = await this.applyPaginate(
+      itemsSorted,
+      props.page,
+      props.perPage,
+    );
+
+    return new KnightRepository.SearchResult({
+      items: itemsPaginated,
+      total: itemsFiltered.length,
+      currentPage: props.page,
+      perPage: props.perPage,
+      sort: props.sort,
+      sortDir: props.sortDir,
+      filterBy: props.filterBy,
+      filter: props.filter,
+    });
+  }
+
   protected async applyFilter(
     items: KnightEntity[],
     filterBy: KnightRepository.Filter,
@@ -32,10 +70,8 @@ export default class KnightInMemoryRepository
   protected async applySort(
     items: KnightEntity[],
     sort: string | null,
-    sortDir: SortDirection | null,
+    sortDir: string | null,
   ): Promise<KnightEntity[]> {
-    return !sort
-      ? super.applySort(items, 'createdAt', 'desc')
-      : super.applySort(items, sort, sortDir);
+    return !sort ? items : super.applySort(items, sort, sortDir);
   }
 }

@@ -2,6 +2,7 @@ import { KnightEntity } from '@/knights/domain/entities/knight.entity';
 import KnightInMemoryRepository from '../../knight-in-memory.repository';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 import { ConflictError } from '@/shared/domain/errors/conflict-error';
+import KnightRepository from '@/knights/domain/repositories/knight.repository';
 
 describe('KnightInMemoryRepository unit tests', () => {
   let sut: KnightInMemoryRepository;
@@ -30,7 +31,7 @@ describe('KnightInMemoryRepository unit tests', () => {
     });
   });
 
-  describe('applyFilter', () => {
+  describe('applyFilter method', () => {
     it('Should no filter items when filter object is null', async () => {
       const entity = new KnightEntity(KnightDataBuilder());
 
@@ -62,31 +63,7 @@ describe('KnightInMemoryRepository unit tests', () => {
     });
   });
 
-  describe('applySort', () => {
-    it('Should sort by createdAt when sort param is null', async () => {
-      const createdAt = new Date();
-
-      const items = [
-        new KnightEntity(KnightDataBuilder({ name: 'Test', createdAt })),
-        new KnightEntity(
-          KnightDataBuilder({
-            name: 'TEST',
-            createdAt: new Date(createdAt.getTime() + 1),
-          }),
-        ),
-        new KnightEntity(
-          KnightDataBuilder({
-            name: 'fake',
-            createdAt: new Date(createdAt.getTime() + 2),
-          }),
-        ),
-      ];
-
-      const itemsSortered = await sut['applySort'](items, null, null);
-
-      expect(itemsSortered).toStrictEqual([items[2], items[1], items[0]]);
-    });
-
+  describe('applySort method', () => {
     it('Should sort by name field', async () => {
       const items = [
         new KnightEntity(KnightDataBuilder({ name: 'c' })),
@@ -109,6 +86,136 @@ describe('KnightInMemoryRepository unit tests', () => {
       itemsSortered = await sut['applySort'](items, 'name', null);
 
       expect(itemsSortered).toStrictEqual([items[1], items[0], items[2]]);
+    });
+  });
+
+  describe('search method', () => {
+    it('Should apply only pagination when the other params are null', async () => {
+      const createdAt = new Date();
+
+      const entities: KnightEntity[] = [];
+
+      const arrange = Array(16).fill(KnightDataBuilder({}));
+      arrange.forEach((element, index) => {
+        entities.push(
+          new KnightEntity({
+            ...element,
+            name: `Knight #${index}`,
+            nickname: `Knight #${index}`,
+            createdAt: new Date(createdAt.getTime() + index * 1000),
+          }),
+        );
+      });
+
+      sut.items = entities;
+
+      const searchOutput = await sut.search(
+        new KnightRepository.SearchParams(),
+      );
+
+      const items = searchOutput.items;
+
+      expect(searchOutput).toBeInstanceOf(KnightRepository.SearchResult);
+      expect(searchOutput.total).toBe(16);
+      expect(searchOutput.items.length).toBe(15);
+
+      searchOutput.items.forEach((item) => {
+        expect(item).toBeInstanceOf(KnightEntity);
+      });
+
+      expect(searchOutput.currentPage).toBe(1);
+
+      items.forEach((item, index) => {
+        expect(`Knight #${index}`).toBe(item.name);
+      });
+    });
+
+    it('Should return only heroified knights when filter param is "heroes"', async () => {
+      const createdAt = new Date();
+
+      const entities: KnightEntity[] = [];
+
+      const arrange = Array(3).fill(KnightDataBuilder({}));
+      arrange.forEach((element, index) => {
+        entities.push(
+          new KnightEntity({
+            ...element,
+            name: `Knight #${index}`,
+            createdAt: new Date(createdAt.getTime() + index * 1000),
+            heroifiedAt: index % 2 ? undefined : new Date(),
+          }),
+        );
+      });
+
+      sut.items = entities;
+
+      const searchOutput = await sut.search(
+        new KnightRepository.SearchParams({ filter: 'heroes' }),
+      );
+
+      const items = searchOutput.items;
+
+      expect(searchOutput).toBeInstanceOf(KnightRepository.SearchResult);
+      expect(searchOutput.total).toBe(2);
+      expect(searchOutput.items.length).toBe(2);
+
+      searchOutput.items.forEach((item) => {
+        expect(item).toBeInstanceOf(KnightEntity);
+      });
+
+      expect(searchOutput.currentPage).toBe(1);
+
+      expect([entities[0], entities[2]]).toStrictEqual(items);
+    });
+
+    it('Should search using filter, sort and paginate', async () => {
+      const createdAt = new Date();
+
+      const entities: KnightEntity[] = [];
+
+      const arrange = ['test1', 'a', 'test3', 'b', 'test2'];
+
+      arrange.forEach((element, index) => {
+        entities.push(
+          new KnightEntity({
+            ...KnightDataBuilder({ name: element }),
+            createdAt: new Date(createdAt.getTime() + index * 1000),
+          }),
+        );
+      });
+
+      sut.items = entities;
+
+      const searchOutputPage1 = await sut.search(
+        new KnightRepository.SearchParams({
+          page: 1,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'asc',
+          filterBy: 'test',
+        }),
+      );
+
+      expect(searchOutputPage1.items[0].toJSON()).toStrictEqual(
+        entities[0].toJSON(),
+      );
+      expect(searchOutputPage1.items[1].toJSON()).toStrictEqual(
+        entities[4].toJSON(),
+      );
+
+      const searchOutputPage2 = await sut.search(
+        new KnightRepository.SearchParams({
+          page: 2,
+          perPage: 2,
+          sort: 'name',
+          sortDir: 'asc',
+          filterBy: 'test',
+        }),
+      );
+
+      expect(searchOutputPage2.items[0].toJSON()).toStrictEqual(
+        entities[2].toJSON(),
+      );
     });
   });
 });
