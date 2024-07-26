@@ -67,16 +67,7 @@ class KnightPrismaRepository implements KnightRepository.Repository {
 
   async insert(entity: KnightEntity): Promise<void> {
     await this.prismaService.knight.create({
-      data: {
-        id: entity.id,
-        name: entity.name,
-        nickname: entity.nickname,
-        weapons: entity.weapons,
-        attributes: entity.attributes,
-        birthday: entity.birthday,
-        keyAttribute: entity.keyAttribute,
-        createdAt: entity.createdAt,
-      },
+      data: entity.toJSON(),
     });
   }
 
@@ -93,20 +84,18 @@ class KnightPrismaRepository implements KnightRepository.Repository {
   async update(entity: KnightEntity): Promise<void> {
     await this._get(entity._id);
 
+    const updatedEntity = {
+      ...entity.toJSON(),
+      updatedAt: new Date(),
+    };
+
+    delete updatedEntity.id;
+
     await this.prismaService.knight.update({
       where: {
         id: entity._id,
       },
-      data: {
-        name: entity.name,
-        nickname: entity.nickname,
-        weapons: entity.weapons,
-        attributes: entity.attributes,
-        birthday: entity.birthday,
-        keyAttribute: entity.keyAttribute,
-        heroifiedAt: entity.heroifiedAt,
-        updatedAt: new Date(),
-      },
+      data: updatedEntity,
     });
   }
 

@@ -40,16 +40,7 @@ describe('KnightPrismaRepository integration tests', () => {
     const entity = new KnightEntity(KnightDataBuilder());
 
     const newKnight = await prismaService.knight.create({
-      data: {
-        id: entity.id,
-        name: entity.name,
-        nickname: entity.nickname,
-        weapons: entity.weapons,
-        attributes: entity.attributes,
-        birthday: entity.birthday.toISOString(),
-        keyAttribute: entity.keyAttribute,
-        createdAt: entity.createdAt,
-      },
+      data: entity.toJSON(),
     });
 
     const output = await sut.findById(newKnight.id);
@@ -72,32 +63,14 @@ describe('KnightPrismaRepository integration tests', () => {
       },
     });
 
-    expect(result).toMatchObject({
-      id: entity.id,
-      name: entity.name,
-      nickname: entity.nickname,
-      birthday: entity.birthday,
-      weapons: entity.weapons,
-      attributes: entity.attributes,
-      keyAttribute: entity.keyAttribute,
-      createdAt: entity.createdAt,
-    });
+    expect(result).toStrictEqual(entity.toJSON());
   });
 
   it('Should returns all knights', async () => {
     const entity = new KnightEntity(KnightDataBuilder());
 
     await prismaService.knight.create({
-      data: {
-        id: entity.id,
-        name: entity.name,
-        nickname: entity.nickname,
-        weapons: entity.weapons,
-        attributes: entity.attributes,
-        birthday: entity.birthday,
-        keyAttribute: entity.keyAttribute,
-        createdAt: entity.createdAt,
-      },
+      data: entity.toJSON(),
     });
 
     const entities = await sut.findAll();
@@ -105,7 +78,7 @@ describe('KnightPrismaRepository integration tests', () => {
     expect(entities).toHaveLength(1);
 
     entities.map((item) =>
-      expect(item.toJSON()).toMatchObject(entity.toJSON()),
+      expect(item.toJSON()).toStrictEqual(entity.toJSON()),
     );
   });
 
@@ -182,10 +155,10 @@ describe('KnightPrismaRepository integration tests', () => {
         }),
       );
 
-      expect(searchOutputPage1.items[0].toJSON()).toMatchObject(
+      expect(searchOutputPage1.items[0].toJSON()).toStrictEqual(
         entities[0].toJSON(),
       );
-      expect(searchOutputPage1.items[1].toJSON()).toMatchObject(
+      expect(searchOutputPage1.items[1].toJSON()).toStrictEqual(
         entities[4].toJSON(),
       );
 
@@ -199,7 +172,7 @@ describe('KnightPrismaRepository integration tests', () => {
         }),
       );
 
-      expect(searchOutputPage2.items[0].toJSON()).toMatchObject(
+      expect(searchOutputPage2.items[0].toJSON()).toStrictEqual(
         entities[2].toJSON(),
       );
     });
@@ -215,17 +188,9 @@ describe('KnightPrismaRepository integration tests', () => {
 
   it('Should update a entity nickname', async () => {
     const entity = new KnightEntity(KnightDataBuilder());
+
     await prismaService.knight.create({
-      data: {
-        id: entity.id,
-        name: entity.name,
-        nickname: entity.nickname,
-        weapons: entity.weapons,
-        attributes: entity.attributes,
-        birthday: entity.birthday,
-        keyAttribute: entity.keyAttribute,
-        createdAt: entity.createdAt,
-      },
+      data: entity.toJSON(),
     });
 
     entity.updateNickname('new nickname');
@@ -240,7 +205,9 @@ describe('KnightPrismaRepository integration tests', () => {
 
     if (!output) throw new Error('Updated entity not found');
 
-    expect(output.nickname).toBe('new nickname');
+    expect(output.id).toEqual(entity.id);
+    expect(output.nickname).toEqual('new nickname');
+    expect(output.updatedAt).toBeInstanceOf(Date);
   });
 
   it('Should throws error when try delete an entity', async () => {
@@ -254,16 +221,7 @@ describe('KnightPrismaRepository integration tests', () => {
       KnightDataBuilder({ nickname: 'test nickname' }),
     );
     await prismaService.knight.create({
-      data: {
-        id: entity.id,
-        name: entity.name,
-        nickname: entity.nickname,
-        weapons: entity.weapons,
-        attributes: entity.attributes,
-        birthday: entity.birthday,
-        keyAttribute: entity.keyAttribute,
-        createdAt: entity.createdAt,
-      },
+      data: entity.toJSON(),
     });
 
     await expect(() => sut.nicknameExists('test nickname')).rejects.toThrow(
