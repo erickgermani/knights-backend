@@ -1,24 +1,16 @@
 ## Descrição
 
-Repositório contendo o código fonte da API do [Knights Challenge](./challenge.md). Construído com o NestJS framework + Fastify, utiliza o MongoDB como SGDB através do Prisma.io.
+Repositório contendo o código fonte da API do [Knights Challenge](./Challenge.md). Construído com o NestJS framework + Fastify, utiliza o MongoDB como SGDB através do Prisma.io.
 
-# Requisitos
+## Requisitos
 
 - Node.js
-- Docker
+- NPM
 
 ## Instalação
 
 ```bash
-$ npm install
-```
-
-## Iniciando o banco de dados
-
-```bash
-$ npm run db:generate
-$ docker-compose up -d
-$ npm run db:push
+$ npm i && npm run db:generate
 ```
 
 ## Rodando a API
@@ -34,14 +26,20 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Testes
 
 ```bash
-# unit tests
+# all tests
 $ npm run test
 
 # e2e tests
 $ npm run test:e2e
+
+# int tests
+$ npm run test:int
+
+# unit tests
+$ npm run test:unit
 
 # test coverage
 $ npm run test:cov
