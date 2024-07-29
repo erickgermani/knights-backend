@@ -7,6 +7,7 @@ import {
 import { WrapperDataInterceptor } from './shared/infrastructure/interceptors/wrapper-data/wrapper-data.interceptor';
 import { ConflictErrorFilter } from './shared/infrastructure/exception-filters/conflict-error/conflict-error.filter';
 import { NotFoundErrorFilter } from './shared/infrastructure/exception-filters/not-found-error/not-found-error.filter';
+import { ActionAlreadyDoneErrorFilter } from './shared/infrastructure/exception-filters/action-already-done-error/action-already-done-error.filter';
 
 export function applyGlobalConfig(app: INestApplication) {
   app.enableCors({
@@ -29,5 +30,9 @@ export function applyGlobalConfig(app: INestApplication) {
     new ClassSerializerInterceptor(app.get(Reflector)),
   );
 
-  app.useGlobalFilters(new ConflictErrorFilter(), new NotFoundErrorFilter());
+  app.useGlobalFilters(
+    new ActionAlreadyDoneErrorFilter(),
+    new ConflictErrorFilter(),
+    new NotFoundErrorFilter(),
+  );
 }
