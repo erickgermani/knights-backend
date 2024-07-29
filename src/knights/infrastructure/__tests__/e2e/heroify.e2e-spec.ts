@@ -7,8 +7,6 @@ import { EnvConfigModule } from '@/shared/infrastructure/env-config/env-config.m
 import { KnightsModule } from '../../knights.module';
 import { DatabaseModule } from '@/shared/infrastructure/database/database.module';
 import request from 'supertest';
-import { KnightsController } from '../../knights.controller';
-import { instanceToPlain } from 'class-transformer';
 import { applyGlobalConfig } from '@/global-config';
 import { KnightEntity } from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';

@@ -111,3 +111,9 @@ export class KnightEntity extends Entity<KnightProps> {
     if (!isValid) throw new EntityValidationError(validator.errors);
   }
 }
+
+export class KnightEntityFactory {
+  static create(props: KnightProps): KnightEntity {
+    return new KnightEntity(props);
+  }
+}
