@@ -51,3 +51,15 @@ $ npm run test:unit
 # test coverage
 $ npm run test:cov
 ```
+
+## Formatação
+
+```bash
+$ npm run format
+```
+
+## Lint
+
+```bash
+$ npm run lint
+```
