@@ -1,4 +1,8 @@
-import { KnightEntity, KnightProps } from '../../knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+  KnightProps,
+} from '../../knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 
 describe('KnightEntity unit tests', () => {
@@ -10,7 +14,7 @@ describe('KnightEntity unit tests', () => {
 
     props = KnightDataBuilder({});
 
-    sut = new KnightEntity(props);
+    sut = KnightEntityFactory.create(props);
   });
 
   it('Constructor method', () => {

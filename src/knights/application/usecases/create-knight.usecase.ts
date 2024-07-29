@@ -2,6 +2,7 @@ import KnightRepository from '@/knights/domain/repositories/knight.repository';
 import {
   Attributes,
   KnightEntity,
+  KnightEntityFactory,
   Weapon,
 } from '@/knights/domain/entities/knight.entity';
 import { KnightOutput, KnightOutputMapper } from '../dtos/knight-output';
@@ -40,7 +41,7 @@ export namespace CreateKnightUseCase {
 
       await this.knightRepository.nicknameExists(nickname);
 
-      const entity = new KnightEntity(input);
+      const entity = KnightEntityFactory.create(input);
 
       await this.knightRepository.insert(entity);
 

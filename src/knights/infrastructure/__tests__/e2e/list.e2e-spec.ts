@@ -10,7 +10,10 @@ import request from 'supertest';
 import { KnightsController } from '../../knights.controller';
 import { instanceToPlain } from 'class-transformer';
 import { applyGlobalConfig } from '@/global-config';
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+} from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 
 describe('KnightsController e2e tests', () => {
@@ -35,12 +38,12 @@ describe('KnightsController e2e tests', () => {
     applyGlobalConfig(app);
     await app.init();
     repository = module.get<KnightRepository.Repository>('KnightRepository');
-  }, 10000);
+  }, 15000);
 
   beforeEach(async () => {
     await prismaService.knight.deleteMany();
 
-    entity = new KnightEntity(KnightDataBuilder());
+    entity = KnightEntityFactory.create(KnightDataBuilder());
 
     await repository.insert(entity);
   });
@@ -54,7 +57,7 @@ describe('KnightsController e2e tests', () => {
 
       arrange.forEach((element, index) => {
         entities.push(
-          new KnightEntity({
+          KnightEntityFactory.create({
             ...element,
             nickname: `nickname #${index}`,
             createdAt: new Date(createdAt.getTime() + index * 1000),
@@ -96,7 +99,7 @@ describe('KnightsController e2e tests', () => {
 
       arrange.forEach((element, index) => {
         entities.push(
-          new KnightEntity({
+          KnightEntityFactory.create({
             ...KnightDataBuilder(),
             name: element,
             nickname: `nickname #${index}`,

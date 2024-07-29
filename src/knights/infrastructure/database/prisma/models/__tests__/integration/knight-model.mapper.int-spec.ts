@@ -15,7 +15,7 @@ describe('KnightModelMapper integration tests', () => {
     prismaService = new PrismaClient();
 
     await prismaService.$connect();
-  }, 10000);
+  }, 15000);
 
   beforeEach(async () => {
     await prismaService.knight.deleteMany();

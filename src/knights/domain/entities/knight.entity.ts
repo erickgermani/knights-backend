@@ -113,7 +113,7 @@ export class KnightEntity extends Entity<KnightProps> {
 }
 
 export class KnightEntityFactory {
-  static create(props: KnightProps): KnightEntity {
-    return new KnightEntity(props);
+  static create(props: KnightProps, id?: string): KnightEntity {
+    return new KnightEntity(props, id);
   }
 }

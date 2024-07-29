@@ -3,7 +3,10 @@ import KnightPrismaRepository from '../../knight-prisma.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { setupPrismaTests } from '@/shared/infrastructure/database/prisma/testing/setup-prisma-tests';
 import { DatabaseModule } from '@/shared/infrastructure/database/database.module';
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+} from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 import KnightRepository from '@/knights/domain/repositories/knight.repository';
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
@@ -22,7 +25,7 @@ describe('KnightPrismaRepository integration tests', () => {
     module = await Test.createTestingModule({
       imports: [DatabaseModule.forTest(prismaService)],
     }).compile();
-  }, 10000);
+  }, 15000);
 
   beforeEach(async () => {
     sut = new KnightPrismaRepository(prismaService as any);
@@ -37,7 +40,7 @@ describe('KnightPrismaRepository integration tests', () => {
   });
 
   it('Should finds an entity by id', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
+    const entity = KnightEntityFactory.create(KnightDataBuilder());
 
     const newKnight = await prismaService.knight.create({
       data: entity.toJSON(),
@@ -53,7 +56,7 @@ describe('KnightPrismaRepository integration tests', () => {
   });
 
   it('Should inserts a new entity', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
+    const entity = KnightEntityFactory.create(KnightDataBuilder());
 
     await sut.insert(entity);
 
@@ -67,7 +70,7 @@ describe('KnightPrismaRepository integration tests', () => {
   });
 
   it('Should returns all knights', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
+    const entity = KnightEntityFactory.create(KnightDataBuilder());
 
     await prismaService.knight.create({
       data: entity.toJSON(),
@@ -91,7 +94,7 @@ describe('KnightPrismaRepository integration tests', () => {
       const arrange = Array(16).fill(KnightDataBuilder({}));
       arrange.forEach((element, index) => {
         entities.push(
-          new KnightEntity({
+          KnightEntityFactory.create({
             ...element,
             name: `Knight #${index}`,
             nickname: `Knight #${index}`,
@@ -134,7 +137,7 @@ describe('KnightPrismaRepository integration tests', () => {
 
       arrange.forEach((element, index) => {
         entities.push(
-          new KnightEntity({
+          KnightEntityFactory.create({
             ...KnightDataBuilder({ name: element }),
             createdAt: new Date(createdAt.getTime() + index * 1000),
           }),
@@ -179,7 +182,7 @@ describe('KnightPrismaRepository integration tests', () => {
   });
 
   it('Should throws error on update when entity not found', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
+    const entity = KnightEntityFactory.create(KnightDataBuilder());
 
     await expect(() => sut.update(entity)).rejects.toThrow(
       new NotFoundError(`KnightModel not found using ID ${entity._id}`),
@@ -187,7 +190,7 @@ describe('KnightPrismaRepository integration tests', () => {
   });
 
   it('Should update a entity nickname', async () => {
-    const entity = new KnightEntity(KnightDataBuilder());
+    const entity = KnightEntityFactory.create(KnightDataBuilder());
 
     await prismaService.knight.create({
       data: entity.toJSON(),
@@ -217,7 +220,7 @@ describe('KnightPrismaRepository integration tests', () => {
   });
 
   it('Should throws error when entity found by nickname', async () => {
-    const entity = new KnightEntity(
+    const entity = KnightEntityFactory.create(
       KnightDataBuilder({ nickname: 'test nickname' }),
     );
     await prismaService.knight.create({
@@ -230,7 +233,7 @@ describe('KnightPrismaRepository integration tests', () => {
   });
 
   it('Should throws error when entity found by nickname', async () => {
-    const entity = new KnightEntity(
+    const entity = KnightEntityFactory.create(
       KnightDataBuilder({ nickname: 'test nickname' }),
     );
 

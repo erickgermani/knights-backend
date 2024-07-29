@@ -8,7 +8,10 @@ import { KnightsModule } from '../../knights.module';
 import { DatabaseModule } from '@/shared/infrastructure/database/database.module';
 import request from 'supertest';
 import { applyGlobalConfig } from '@/global-config';
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+} from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 
 describe('KnightsController e2e tests', () => {
@@ -39,7 +42,7 @@ describe('KnightsController e2e tests', () => {
   beforeEach(async () => {
     await prismaService.knight.deleteMany();
 
-    entity = new KnightEntity(KnightDataBuilder());
+    entity = KnightEntityFactory.create(KnightDataBuilder());
 
     await repository.insert(entity);
   });

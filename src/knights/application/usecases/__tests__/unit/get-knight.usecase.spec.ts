@@ -1,7 +1,10 @@
 import KnightInMemoryRepository from '@/knights/infrastructure/database/in-memory/repositories/knight-in-memory.repository';
 import { GetKnightUseCase } from '../../get-knight.usecase';
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+} from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 
 describe('GetKnightUseCase unit tests', () => {
@@ -22,7 +25,7 @@ describe('GetKnightUseCase unit tests', () => {
   it('Should be able to get knight profile', async () => {
     const spyFindById = jest.spyOn(repository, 'findById');
 
-    const items = [new KnightEntity(KnightDataBuilder())];
+    const items = [KnightEntityFactory.create(KnightDataBuilder())];
 
     repository.items = items;
 

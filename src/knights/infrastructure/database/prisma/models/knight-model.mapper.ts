@@ -2,6 +2,7 @@ import { ValidationError } from '@/shared/domain/errors/validation-error';
 import {
   Attributes,
   KnightEntity,
+  KnightEntityFactory,
   KnightProps,
   Weapon,
 } from '@/knights/domain/entities/knight.entity';
@@ -25,7 +26,7 @@ class KnightModelMapper {
     if (model.updatedAt) data.updatedAt = model.updatedAt;
 
     try {
-      return new KnightEntity(data, model.id);
+      return KnightEntityFactory.create(data, model.id);
     } catch {
       throw new ValidationError('An entity not be loaded');
     }

@@ -1,7 +1,10 @@
 import { ListKnightsUseCase } from '../../list-knights.usecase';
 import KnightInMemoryRepository from '@/knights/infrastructure/database/in-memory/repositories/knight-in-memory.repository';
 import KnightRepository from '@/knights/domain/repositories/knight.repository';
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+} from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 
 describe('ListKnightsUseCase unit tests', () => {
@@ -35,7 +38,7 @@ describe('ListKnightsUseCase unit tests', () => {
       perPage: 2,
     });
 
-    const entity = new KnightEntity(KnightDataBuilder());
+    const entity = KnightEntityFactory.create(KnightDataBuilder());
 
     result = new KnightRepository.SearchResult({
       items: [entity],
@@ -63,8 +66,8 @@ describe('ListKnightsUseCase unit tests', () => {
     const createdAt = new Date();
 
     const items = [
-      new KnightEntity(KnightDataBuilder({ createdAt })),
-      new KnightEntity(
+      KnightEntityFactory.create(KnightDataBuilder({ createdAt })),
+      KnightEntityFactory.create(
         KnightDataBuilder({ createdAt: new Date(createdAt.getTime() + 1) }),
       ),
     ];
@@ -84,11 +87,11 @@ describe('ListKnightsUseCase unit tests', () => {
 
   it('Should return the knights using pagination, sort and filter', async () => {
     const items = [
-      new KnightEntity(KnightDataBuilder({ name: 'a' })),
-      new KnightEntity(KnightDataBuilder({ name: 'AA' })),
-      new KnightEntity(KnightDataBuilder({ name: 'Aa' })),
-      new KnightEntity(KnightDataBuilder({ name: 'b' })),
-      new KnightEntity(KnightDataBuilder({ name: 'c' })),
+      KnightEntityFactory.create(KnightDataBuilder({ name: 'a' })),
+      KnightEntityFactory.create(KnightDataBuilder({ name: 'AA' })),
+      KnightEntityFactory.create(KnightDataBuilder({ name: 'Aa' })),
+      KnightEntityFactory.create(KnightDataBuilder({ name: 'b' })),
+      KnightEntityFactory.create(KnightDataBuilder({ name: 'c' })),
     ];
 
     repository.items = items;

@@ -1,6 +1,9 @@
 import KnightInMemoryRepository from '@/knights/infrastructure/database/in-memory/repositories/knight-in-memory.repository';
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+} from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 import { HeroifyKnightUseCase } from '../../heroify-knight.usecase';
 import { ActionAlreadyDoneError } from '@/shared/application/errors/action-already-done-error';
@@ -21,7 +24,7 @@ describe('HeroifyKnightUseCase unit tests', () => {
   });
 
   it('Should throws error when knight already was heroified', async () => {
-    const knight = new KnightEntity(KnightDataBuilder());
+    const knight = KnightEntityFactory.create(KnightDataBuilder());
 
     knight.heroify();
 
@@ -39,7 +42,7 @@ describe('HeroifyKnightUseCase unit tests', () => {
   it('Should be able to heroify knight', async () => {
     const spyFindById = jest.spyOn(repository, 'findById');
 
-    const items = [new KnightEntity(KnightDataBuilder())];
+    const items = [KnightEntityFactory.create(KnightDataBuilder())];
 
     repository.items = items;
 

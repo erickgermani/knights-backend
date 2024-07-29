@@ -1,4 +1,7 @@
-import { KnightEntity } from '@/knights/domain/entities/knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+} from '@/knights/domain/entities/knight.entity';
 import KnightInMemoryRepository from '../../knight-in-memory.repository';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 import { ConflictError } from '@/shared/domain/errors/conflict-error';
@@ -13,7 +16,7 @@ describe('KnightInMemoryRepository unit tests', () => {
 
   describe('nicknameExists method', () => {
     it('Should throw error when not found', async () => {
-      const entity = new KnightEntity(
+      const entity = KnightEntityFactory.create(
         KnightDataBuilder({ nickname: 'john.knight' }),
       );
 
@@ -33,7 +36,7 @@ describe('KnightInMemoryRepository unit tests', () => {
 
   describe('applyFilter method', () => {
     it('Should no filter items when filter object is null', async () => {
-      const entity = new KnightEntity(KnightDataBuilder());
+      const entity = KnightEntityFactory.create(KnightDataBuilder());
 
       await sut.insert(entity);
 
@@ -49,9 +52,9 @@ describe('KnightInMemoryRepository unit tests', () => {
 
     it('Should filter name field using filter param', async () => {
       const items = [
-        new KnightEntity(KnightDataBuilder({ name: 'Test' })),
-        new KnightEntity(KnightDataBuilder({ name: 'TEST' })),
-        new KnightEntity(KnightDataBuilder({ name: 'fake' })),
+        KnightEntityFactory.create(KnightDataBuilder({ name: 'Test' })),
+        KnightEntityFactory.create(KnightDataBuilder({ name: 'TEST' })),
+        KnightEntityFactory.create(KnightDataBuilder({ name: 'fake' })),
       ];
 
       const spyFilter = jest.spyOn(items, 'filter');
@@ -66,13 +69,13 @@ describe('KnightInMemoryRepository unit tests', () => {
   describe('applySort method', () => {
     it('Should sort by name field', async () => {
       const items = [
-        new KnightEntity(KnightDataBuilder({ name: 'c' })),
-        new KnightEntity(
+        KnightEntityFactory.create(KnightDataBuilder({ name: 'c' })),
+        KnightEntityFactory.create(
           KnightDataBuilder({
             name: 'd',
           }),
         ),
-        new KnightEntity(
+        KnightEntityFactory.create(
           KnightDataBuilder({
             name: 'a',
           }),
@@ -98,7 +101,7 @@ describe('KnightInMemoryRepository unit tests', () => {
       const arrange = Array(16).fill(KnightDataBuilder({}));
       arrange.forEach((element, index) => {
         entities.push(
-          new KnightEntity({
+          KnightEntityFactory.create({
             ...element,
             name: `Knight #${index}`,
             nickname: `Knight #${index}`,
@@ -138,7 +141,7 @@ describe('KnightInMemoryRepository unit tests', () => {
       const arrange = Array(3).fill(KnightDataBuilder({}));
       arrange.forEach((element, index) => {
         entities.push(
-          new KnightEntity({
+          KnightEntityFactory.create({
             ...element,
             name: `Knight #${index}`,
             createdAt: new Date(createdAt.getTime() + index * 1000),
@@ -177,7 +180,7 @@ describe('KnightInMemoryRepository unit tests', () => {
 
       arrange.forEach((element, index) => {
         entities.push(
-          new KnightEntity({
+          KnightEntityFactory.create({
             ...KnightDataBuilder({ name: element }),
             createdAt: new Date(createdAt.getTime() + index * 1000),
           }),

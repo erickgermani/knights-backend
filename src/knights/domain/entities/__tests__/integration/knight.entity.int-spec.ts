@@ -1,6 +1,10 @@
 import { EntityValidationError } from '@/shared/domain/errors/validation-error';
 import { KnightDataBuilder } from '../../../testing/helpers/knight-data-builder';
-import { KnightEntity, KnightProps } from '../../knight.entity';
+import {
+  KnightEntity,
+  KnightEntityFactory,
+  KnightProps,
+} from '../../knight.entity';
 
 describe('KnightEntity integration tests', () => {
   describe('Constructor method', () => {
@@ -10,28 +14,36 @@ describe('KnightEntity integration tests', () => {
         name: null,
       };
 
-      expect(() => new KnightEntity(props)).toThrowError(EntityValidationError);
+      expect(() => KnightEntityFactory.create(props)).toThrowError(
+        EntityValidationError,
+      );
 
       props = {
         ...KnightDataBuilder({}),
         name: '',
       };
 
-      expect(() => new KnightEntity(props)).toThrowError(EntityValidationError);
+      expect(() => KnightEntityFactory.create(props)).toThrowError(
+        EntityValidationError,
+      );
 
       props = {
         ...KnightDataBuilder({}),
         name: 10 as any,
       };
 
-      expect(() => new KnightEntity(props)).toThrowError(EntityValidationError);
+      expect(() => KnightEntityFactory.create(props)).toThrowError(
+        EntityValidationError,
+      );
 
       props = {
         ...KnightDataBuilder({}),
         name: 'a'.repeat(256),
       };
 
-      expect(() => new KnightEntity(props)).toThrowError(EntityValidationError);
+      expect(() => KnightEntityFactory.create(props)).toThrowError(
+        EntityValidationError,
+      );
     });
 
     it('Should create a valid knight', () => {
@@ -41,7 +53,7 @@ describe('KnightEntity integration tests', () => {
         ...KnightDataBuilder({}),
       };
 
-      new KnightEntity(props);
+      KnightEntityFactory.create(props);
     });
   });
 });
