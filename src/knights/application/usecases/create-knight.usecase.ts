@@ -1,7 +1,6 @@
 import KnightRepository from '@/knights/domain/repositories/knight.repository';
 import {
   Attributes,
-  KnightEntity,
   KnightEntityFactory,
   Weapon,
 } from '@/knights/domain/entities/knight.entity';

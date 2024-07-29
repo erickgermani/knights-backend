@@ -1,7 +1,4 @@
-import {
-  KnightEntity,
-  KnightEntityFactory,
-} from '@/knights/domain/entities/knight.entity';
+import { KnightEntityFactory } from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 import { KnightOutputMapper } from '../../knight-output';
 

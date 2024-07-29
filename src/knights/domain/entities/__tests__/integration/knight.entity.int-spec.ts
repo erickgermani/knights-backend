@@ -1,10 +1,6 @@
 import { EntityValidationError } from '@/shared/domain/errors/validation-error';
 import { KnightDataBuilder } from '../../../testing/helpers/knight-data-builder';
-import {
-  KnightEntity,
-  KnightEntityFactory,
-  KnightProps,
-} from '../../knight.entity';
+import { KnightEntityFactory, KnightProps } from '../../knight.entity';
 
 describe('KnightEntity integration tests', () => {
   describe('Constructor method', () => {

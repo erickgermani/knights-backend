@@ -11,10 +11,7 @@ import request from 'supertest';
 import { KnightsController } from '../../knights.controller';
 import { instanceToPlain } from 'class-transformer';
 import { applyGlobalConfig } from '@/global-config';
-import {
-  KnightEntity,
-  KnightEntityFactory,
-} from '@/knights/domain/entities/knight.entity';
+import { KnightEntityFactory } from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 
 describe('KnightsController e2e tests', () => {

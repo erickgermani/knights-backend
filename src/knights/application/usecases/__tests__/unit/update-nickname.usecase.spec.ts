@@ -1,9 +1,6 @@
 import KnightInMemoryRepository from '@/knights/infrastructure/database/in-memory/repositories/knight-in-memory.repository';
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
-import {
-  KnightEntity,
-  KnightEntityFactory,
-} from '@/knights/domain/entities/knight.entity';
+import { KnightEntityFactory } from '@/knights/domain/entities/knight.entity';
 import { KnightDataBuilder } from '@/knights/domain/testing/helpers/knight-data-builder';
 import UpdateKnightUseCase from '../../update-knight.usecase';
 import { BadRequestError } from '@/shared/application/errors/bad-request-error';
