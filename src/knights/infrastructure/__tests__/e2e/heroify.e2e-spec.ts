@@ -50,7 +50,7 @@ describe('KnightsController e2e tests', () => {
     it('Should heroify an knight', async () => {
       await request(app.getHttpServer())
         .delete('/v1/knights/' + entity.id)
-        .expect(200);
+        .expect(204);
 
       const res = await request(app.getHttpServer())
         .get('/v1/knights/' + entity.id)

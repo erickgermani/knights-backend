@@ -147,14 +147,14 @@ export class KnightsController {
   }
 
   @ApiResponse({
-    status: 200,
+    status: 204,
     description: 'Deletion confirmation response',
   })
   @ApiResponse({
     status: 404,
     description: 'Id not found',
   })
-  @HttpCode(200)
+  @HttpCode(204)
   @Delete(':id')
   async heroify(@Param('id') id: string) {
     await this.heroifyKnightUseCase.execute({ id });
