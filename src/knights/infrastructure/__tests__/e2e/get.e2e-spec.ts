@@ -23,7 +23,6 @@ describe('KnightsController e2e tests', () => {
   let entity: KnightEntity;
   const prismaService = new PrismaClient();
 
-  // TODO otimizar para não necessitar de um timeout de 15s
   beforeAll(async () => {
     setupPrismaTests();
 
