@@ -16,6 +16,8 @@ $ npm run db:generate
 
 ## Rodando o back-end
 
+Garanta que a porta 3000 esteja livre.
+
 ```bash
 # development
 $ npm run start
@@ -26,6 +28,10 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## Documentação
+
+Acesse a documentação em [http://localhost:3000/api](http://localhost:3000/api). O back-end precisa estar em execução.
 
 ## Testes
 

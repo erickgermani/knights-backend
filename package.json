@@ -1,7 +1,7 @@
 {
   "name": "knights-backend",
-  "version": "0.0.1",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Repositório contendo o código fonte do back-end do Knights Challenge. Construído com o NestJS framework + Fastify, utiliza o MongoDB como SGDB através do Prisma.io.",
   "author": "erickgermani13@gmail.com",
   "private": true,
   "license": "UNLICENSED",
